@@ -1,0 +1,82 @@
+id: gramps_families
+label: 'Migration for Gramps families'
+migration_tags:
+  - Gramps
+source:
+  constants:
+    TITLE_PREFIX: 'Gramps family '
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: simple_xml
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - modules/custom/migrate_gramps/sources/example.gramps.orig
+  namespaces:
+    'ns': 'http://gramps-project.org/xml/1.7.1/'
+  item_selector: //ns:family
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    - name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    - name: src_id
+      label: 'id'
+      selector: '@id'
+    - name: src_type
+      label: 'Relationship type'
+      selector: ns:rel/@type
+    - name: src_father
+      label: 'Father reference'
+      selector: ns:father/@hlink
+    - name: src_mother
+      label: 'Mother reference'
+      selector: ns:mother/@hlink
+    - name: src_childref
+      label: 'Child reference'
+      selector: ns:childref/@hlink
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
+    - name: src_eventref
+      label: 'Event reference'
+      selector: ns:eventref/@hlink
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  title:
+    plugin: concat
+    source:
+      - constants/TITLE_PREFIX
+      - src_id
+  changed:
+    plugin: get
+    source: src_changed
+  field_father_reference:
+    plugin: migration_lookup
+    source: src_father
+    migration: migrate_gramps_people
+  field_mother_reference:
+    plugin: migration_lookup
+    source: src_mother
+    migration: migrate_gramps_people
+  field_child_reference:
+    plugin: migration_lookup
+    source: src_childref
+    migration: migrate_gramps_people
+  field_event_reference:
+    plugin: migration_lookup
+    source: src_eventref
+    migration: migrate_gramps_events
+destination:
+  plugin: 'entity:node'
+  default_bundle: family

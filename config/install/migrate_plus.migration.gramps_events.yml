@@ -1,0 +1,55 @@
+id: gramps_events
+label: 'Migration for Gramps events'
+migration_group: gramps
+source:
+  constants:
+    TITLE_PREFIX: 'Gramps event '
+
+  item_selector: //ns:person
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    - name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    - name: src_id
+      label: 'id'
+      selector: '@id'
+    - name: src_type
+      label: 'Type'
+      selector: 'ns:type'
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
+    - name: src_childof
+      label: 'Child reference'
+      selector: ns:childof/@hlink
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  title:
+    plugin: concat
+    source:
+      - constants/TITLE_PREFIX
+      - src_id
+  changed:
+    plugin: get
+    source: src_changed
+  field_type:
+    plugin: get
+    source: src_type
+  field_place_reference:
+    plugin: migration_lookup
+    source: src_placeref
+    migration: migrate_gramps_places
+destination:
+  plugin: 'entity:node'
+  default_bundle: event

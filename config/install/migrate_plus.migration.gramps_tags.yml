@@ -1,0 +1,53 @@
+id: gramps_tags
+label: 'Migration for Gramps tags'
+migration_tags:
+  - Gramps
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: simple_xml
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - modules/custom/migrate_gramps/sources/example.gramps
+  namespaces:
+    'ns': 'http://gramps-project.org/xml/1.7.1/'
+  item_selector: //ns:tag
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    - name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    - name: src_name
+      label: 'name'
+      selector: '@name'
+    - name: src_color
+      label: 'Colour'
+      selector: '@color'
+    - name: src_priority
+      label: 'Priority'
+      selector: '@priority'
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  name:
+    plugin: get
+    source: src_name
+  changed:
+    plugin: get
+    source: src_changed
+#  colour:
+#    plugin: get
+#    source:
+#      - src_colour
+  weight:
+    plugin: get
+    source: src_priority
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: tags

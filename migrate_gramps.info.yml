@@ -1,0 +1,10 @@
+name: Migrate Gramps
+type: module
+description: Migrates XML data from the genealocigal programm gramps into Drupal.
+package: Migration
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:migrate
+  - entity_reference_revisions:entity_reference_revisions
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools

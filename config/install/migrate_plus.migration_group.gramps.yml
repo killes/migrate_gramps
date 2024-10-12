@@ -1,0 +1,16 @@
+id: gramps
+label: 'Group of Gramps migrations'
+description: 'Contains all migrations to migrate a Gramps XML file to Drupal.'
+source_type: 'XML resource'
+shared_configuration:
+  migration_tags:
+    - Gramps
+  source:
+    plugin: url
+    data_fetcher_plugin: file
+    data_parser_plugin: simple_xml
+    urls:
+      # TODO: figure out how to use a file provided from CLI
+      - modules/custom/migrate_gramps/sources/example.gramps.orig
+    namespaces:
+      'ns': 'http://gramps-project.org/xml/1.7.1/'

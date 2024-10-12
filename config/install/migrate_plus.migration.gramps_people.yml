@@ -1,0 +1,70 @@
+id: gramps_people
+label: 'Migration for Gramps people'
+migration_tags:
+  - Gramps
+source:
+  constants:
+    TITLE_PREFIX: 'Gramps person '
+
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: simple_xml
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - modules/custom/migrate_gramps/sources/example.gramps.orig
+  namespaces:
+    'ns': 'http://gramps-project.org/xml/1.7.1/'
+  item_selector: //ns:person
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    - name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    - name: src_id
+      label: 'id'
+      selector: '@id'
+    - name: src_gender
+      label: 'Gender'
+      selector: 'ns:gender'
+    - name: src_parentin
+      label: 'Family parent reference'
+      selector: ns:parentin/@hlink
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
+    - name: src_eventref
+      label: 'Event reference'
+      selector: ns:eventref/@hlink
+    - name: src_childof
+      label: 'Child reference'
+      selector: ns:childof/@hlink
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  title:
+    plugin: concat
+    source:
+      - constants/TITLE_PREFIX
+      - src_id
+  changed:
+    plugin: get
+    source: src_changed
+  field_gender:
+    plugin: get
+    source: src_gender
+  field_event_reference:
+    plugin: migration_lookup
+    source: src_eventref
+    migration: migrate_gramps_events
+destination:
+  plugin: 'entity:node'
+  default_bundle: person

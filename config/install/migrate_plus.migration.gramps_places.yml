@@ -1,0 +1,65 @@
+id: gramps_places
+label: 'Migration for Gramps places'
+migration_tags:
+  - Gramps
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: simple_xml
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - modules/custom/migrate_gramps/sources/example.gramps.orig
+  namespaces:
+    'ns': 'http://gramps-project.org/xml/1.7.1/'
+  item_selector: //ns:placeobj
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    - name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    - name: src_id
+      label: 'id'
+      selector: '@id'
+    - name: src_type
+      label: 'Type'
+      selector: '@type'
+    - name: src_ptitle
+      label: 'PTitle'
+      selector: ns:ptitle
+    - name: src_pname
+      label: 'Name'
+      selector: ns:pname/@value
+    - name: src_placeref
+      label: 'Place reference'
+      selector: ns:placeref/@hlink
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  field_type:
+    plugin: get
+    source: src_type
+  title:
+    plugin: get
+    source: src_pname
+  field_name:
+    plugin: get
+    source: src_ptitle
+  changed:
+    plugin: get
+    source: src_changed
+  field_place_reference:
+    plugin: migration_lookup
+    source: src_placeref
+    migration: migrate_gramps_places
+destination:
+  plugin: 'entity:node'
+  default_bundle: placeobj
