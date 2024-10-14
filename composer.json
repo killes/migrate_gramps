@@ -1,0 +1,5 @@
+{
+    "name": "killes/migrate_gramps",
+    "description": "Migrate Gramps content to Drupal.",
+    "type": "drupal-module"
+}
