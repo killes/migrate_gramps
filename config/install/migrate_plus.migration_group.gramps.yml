@@ -1,6 +1,12 @@
 id: gramps
 label: 'Group of Gramps migrations'
 description: 'Contains all migrations to migrate a Gramps XML file to Drupal.'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
 source_type: 'XML resource'
 shared_configuration:
   migration_tags:

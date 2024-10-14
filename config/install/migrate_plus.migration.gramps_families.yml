@@ -1,19 +1,16 @@
 id: gramps_families
 label: 'Migration for Gramps families'
-migration_tags:
-  - Gramps
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
 source:
   constants:
     TITLE_PREFIX: 'Gramps family '
 
-  plugin: url
-  data_fetcher_plugin: file
-  data_parser_plugin: simple_xml
-  urls:
-    # TODO: figure out how to use a file provided from CLI
-    - modules/custom/migrate_gramps/sources/example.gramps.orig
-  namespaces:
-    'ns': 'http://gramps-project.org/xml/1.7.1/'
   item_selector: //ns:family
   fields:
     - name: src_handle

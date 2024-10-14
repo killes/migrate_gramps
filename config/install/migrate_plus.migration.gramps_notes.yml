@@ -1,1 +1,7 @@
 id: gramps_notes
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps

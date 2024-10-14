@@ -1,1 +1,8 @@
 id: gramps_sources
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps

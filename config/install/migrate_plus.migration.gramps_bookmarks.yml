@@ -1,2 +1,8 @@
 id: gramps_bookmarks
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
 # @TODO

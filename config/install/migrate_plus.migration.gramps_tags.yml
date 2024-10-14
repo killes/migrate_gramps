@@ -1,16 +1,13 @@
 id: gramps_tags
 label: 'Migration for Gramps tags'
-migration_tags:
-  - Gramps
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
 source:
-  plugin: url
-  data_fetcher_plugin: file
-  data_parser_plugin: simple_xml
-  urls:
-    # TODO: figure out how to use a file provided from CLI
-    - modules/custom/migrate_gramps/sources/example.gramps
-  namespaces:
-    'ns': 'http://gramps-project.org/xml/1.7.1/'
   item_selector: //ns:tag
   fields:
     - name: src_handle
