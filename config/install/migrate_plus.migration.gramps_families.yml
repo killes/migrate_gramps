@@ -58,15 +58,15 @@ process:
   changed:
     plugin: get
     source: src_changed
-  field_father_reference:
+  field_father:
     plugin: migration_lookup
     source: src_father
     migration: migrate_gramps_people
-  field_mother_reference:
+  field_mother:
     plugin: migration_lookup
     source: src_mother
     migration: migrate_gramps_people
-  field_child_reference:
+  field_child:
     plugin: migration_lookup
     source: src_childref
     migration: migrate_gramps_people

@@ -1,7 +1,9 @@
 id: gramps_citations
+label: 'Migration for Gramps citations'
 dependencies:
   module:
     - migrate_gramps
   enforced:
     module:
       - migrate_gramps
+migration_group: gramps

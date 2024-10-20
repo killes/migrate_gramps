@@ -1,7 +1,9 @@
 id: gramps_namemaps
+label: 'Migration for Gramps name maps'
 dependencies:
   module:
     - migrate_gramps
   enforced:
     module:
       - migrate_gramps
+migration_group: gramps
