@@ -11,7 +11,7 @@ source:
   constants:
     TITLE_PREFIX: 'Gramps event '
 
-  item_selector: //ns:person
+  item_selector: //ns:event
   fields:
     - name: src_handle
       label: 'Gramps handle'

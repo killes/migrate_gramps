@@ -7,3 +7,39 @@ dependencies:
     module:
       - migrate_gramps
 migration_group: gramps
+source:
+  constants:
+    TITLE_PREFIX: 'Gramps citation '
+
+  item_selector: //ns:citation
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    - name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    - name: src_id
+      label: 'id'
+      selector: '@id'
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  title:
+    plugin: concat
+    source:
+      - constants/TITLE_PREFIX
+      - src_id
+  changed:
+    plugin: get
+    source: src_changed
+destination:
+  plugin: 'entity:node'
+  default_bundle: citation
