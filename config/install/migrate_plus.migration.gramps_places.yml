@@ -7,6 +7,12 @@ dependencies:
     module:
       - migrate_gramps
 migration_group: gramps
+migration_dependencies:
+  required:
+    - gramps_citations
+    - gramps_notes
+    - gramps_objects
+    - gramps_tags
 source:
   item_selector: //ns:placeobj
   fields:
@@ -28,9 +34,21 @@ source:
     - name: src_pname
       label: 'Name'
       selector: ns:pname/@value
+    - name: src_citationref
+      label: 'Citation Reference'
+      selector: 'ns:citationref/@hlink'
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+    - name: src_objref
+      label: 'Object Reference'
+      selector: 'ns:objref/@hlink'
     - name: src_placeref
       label: 'Place reference'
       selector: ns:placeref/@hlink
+    - name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
   ids:
     src_handle:
       type: string
@@ -53,10 +71,22 @@ process:
   changed:
     plugin: get
     source: src_changed
+  field_note_reference:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+  field_object_reference:
+    plugin: migration_lookup
+    source: src_objref
+    migration: gramps_objects
   field_place_reference:
     plugin: migration_lookup
     source: src_placeref
-    migration: migrate_gramps_places
+    migration: gramps_places
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
 destination:
   plugin: 'entity:node'
   default_bundle: placeobj

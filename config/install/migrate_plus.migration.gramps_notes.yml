@@ -7,6 +7,9 @@ dependencies:
     module:
       - migrate_gramps
 migration_group: gramps
+migration_dependencies:
+  required:
+    - gramps_tags
 source:
   constants:
     TITLE_PREFIX: 'Gramps note '
@@ -22,6 +25,9 @@ source:
     - name: src_id
       label: 'id'
       selector: '@id'
+    - name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
   ids:
     src_handle:
       type: string
@@ -40,6 +46,10 @@ process:
   changed:
     plugin: get
     source: src_changed
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
 destination:
   plugin: 'entity:node'
   default_bundle: note

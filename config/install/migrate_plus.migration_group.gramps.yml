@@ -17,6 +17,6 @@ shared_configuration:
     data_parser_plugin: simple_xml
     urls:
       # TODO: figure out how to use a file provided from CLI
-      - modules/custom/migrate_gramps/sources/example.gramps.orig
+      - sites/default/files/example.gramps.orig
     namespaces:
       'ns': 'http://gramps-project.org/xml/1.7.1/'

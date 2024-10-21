@@ -6,6 +6,12 @@ dependencies:
     module:
       - migrate_gramps
 migration_group: gramps
+migration_dependencies:
+  required:
+    - gramps_notes
+    - gramps_objects
+    - gramps_repositories
+    - gramps_tags
 source:
   constants:
     TITLE_PREFIX: 'Gramps source '
@@ -21,6 +27,18 @@ source:
     - name: src_id
       label: 'id'
       selector: '@id'
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+    - name: src_objref
+      label: 'Object Reference'
+      selector: 'ns:objref/@hlink'
+    - name: src_reporef
+      label: 'Repository Reference'
+      selector: 'ns:reporef/@hlink'
+    - name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
   ids:
     src_handle:
       type: string
@@ -39,6 +57,22 @@ process:
   changed:
     plugin: get
     source: src_changed
+  field_note_reference:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+  field_object_reference:
+    plugin: migration_lookup
+    source: src_objref
+    migration: gramps_objects
+  field_repository_reference:
+    plugin: migration_lookup
+    source: src_reporef
+    migration: gramps_repositories
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
 destination:
   plugin: 'entity:node'
   default_bundle: source

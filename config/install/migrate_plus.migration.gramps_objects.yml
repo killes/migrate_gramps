@@ -7,6 +7,11 @@ dependencies:
     module:
       - migrate_gramps
 migration_group: gramps
+migration_dependencies:
+  required:
+    - gramps_notes
+    - gramps_tags
+# Circular reference   - gramps_citations
 source:
   constants:
     TITLE_PREFIX: 'Gramps object '
@@ -22,11 +27,14 @@ source:
     - name: src_id
       label: 'id'
       selector: '@id'
+    - name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
   ids:
     src_handle:
       type: string
 process:
-  field_handle:
+  field_mhandle:
     plugin: get
     source: src_handle
   field_id:
@@ -40,6 +48,10 @@ process:
   changed:
     plugin: get
     source: src_changed
+  field_tags:
+    plugin: migration_lookup
+    source: src_eventref
+    migration: gramps_tags
 destination:
   plugin: 'entity:node'
   default_bundle: object

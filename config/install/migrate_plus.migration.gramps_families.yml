@@ -7,6 +7,14 @@ dependencies:
     module:
       - migrate_gramps
 migration_group: gramps
+migration_dependencies:
+  required:
+    - gramps_citations
+    - gramps_events
+    - gramps_notes
+    - gramps_people
+    - gramps_objects
+    - gramps_tags
 source:
   constants:
     TITLE_PREFIX: 'Gramps family '
@@ -40,6 +48,12 @@ source:
     - name: src_eventref
       label: 'Event reference'
       selector: ns:eventref/@hlink
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+    - name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
   ids:
     src_handle:
       type: string
@@ -61,19 +75,27 @@ process:
   field_father:
     plugin: migration_lookup
     source: src_father
-    migration: migrate_gramps_people
+    migration: gramps_people
   field_mother:
     plugin: migration_lookup
     source: src_mother
-    migration: migrate_gramps_people
+    migration: gramps_people
   field_child:
     plugin: migration_lookup
     source: src_childref
-    migration: migrate_gramps_people
+    migration: gramps_people
   field_event_reference:
     plugin: migration_lookup
     source: src_eventref
-    migration: migrate_gramps_events
+    migration: gramps_events
+  field_note_reference:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
 destination:
   plugin: 'entity:node'
   default_bundle: family

@@ -6,6 +6,13 @@ dependencies:
   enforced:
     module:
       - migrate_gramps
+migration_dependencies:
+  required:
+    - gramps_citations
+    - gramps_notes
+    - gramps_places
+    - gramps_objects
+    - gramps_tags
 migration_group: gramps
 source:
   constants:
@@ -28,9 +35,18 @@ source:
     - name: src_citationref
       label: 'Citation reference'
       selector: ns:citationref/@hlink
-    - name: src_childof
-      label: 'Child reference'
-      selector: ns:childof/@hlink
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+    - name: src_objref
+      label: 'Object Reference'
+      selector: 'ns:objref/@hlink'
+    - name: src_placeref
+      label: 'Place reference'
+      selector: ns:placeref/@hlink
+    - name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
   ids:
     src_handle:
       type: string
@@ -52,10 +68,26 @@ process:
   field_type:
     plugin: get
     source: src_type
+  field_citation_reference:
+    plugin: migration_lookup
+    source: src_citationref
+    migration: gramps_citations
   field_place_reference:
     plugin: migration_lookup
     source: src_placeref
-    migration: migrate_gramps_places
+    migration: gramps_places
+  field_object_reference:
+    plugin: migration_lookup
+    source: src_objref
+    migration: gramps_objects
+  field_note_reference:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
 destination:
   plugin: 'entity:node'
   default_bundle: event
