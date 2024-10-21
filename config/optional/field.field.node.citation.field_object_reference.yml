@@ -1,0 +1,29 @@
+uuid: 79c9ebe3-b687-45ba-8096-1e276376ce17
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_object_reference
+    - node.type.citation
+    - node.type.object
+id: node.citation.field_object_reference
+field_name: field_object_reference
+entity_type: node
+bundle: citation
+label: 'Object reference'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      object: object
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

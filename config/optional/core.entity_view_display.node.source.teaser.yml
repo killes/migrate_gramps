@@ -1,0 +1,39 @@
+uuid: e65cac3a-1299-4323-9136-feb7d248f160
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.source.field_handle
+    - field.field.node.source.field_id
+    - field.field.node.source.field_note_reference
+    - field.field.node.source.field_object_reference
+    - field.field.node.source.field_repository_reference
+    - field.field.node.source.field_tags
+    - node.type.source
+  module:
+    - user
+id: node.source.teaser
+targetEntityType: node
+bundle: source
+mode: teaser
+content:
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_handle: true
+  field_id: true
+  field_note_reference: true
+  field_object_reference: true
+  field_repository_reference: true

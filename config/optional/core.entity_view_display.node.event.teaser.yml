@@ -1,0 +1,45 @@
+uuid: 4d80d89d-fc51-437e-ad1c-c4aa596e258d
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.event.field_citation_reference
+    - field.field.node.event.field_description
+    - field.field.node.event.field_handle
+    - field.field.node.event.field_id
+    - field.field.node.event.field_note_reference
+    - field.field.node.event.field_object_reference
+    - field.field.node.event.field_place_reference
+    - field.field.node.event.field_tags
+    - field.field.node.event.field_type
+    - node.type.event
+  module:
+    - user
+id: node.event.teaser
+targetEntityType: node
+bundle: event
+mode: teaser
+content:
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_citation_reference: true
+  field_description: true
+  field_handle: true
+  field_id: true
+  field_note_reference: true
+  field_object_reference: true
+  field_place_reference: true
+  field_type: true

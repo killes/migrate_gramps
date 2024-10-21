@@ -1,0 +1,64 @@
+uuid: 2386a0e6-de89-4c05-8474-6c95b5cb552a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.repository.field_handle
+    - field.field.node.repository.field_id
+    - field.field.node.repository.field_note_reference
+    - field.field.node.repository.field_tags
+    - field.field.node.repository.field_type
+    - node.type.repository
+  module:
+    - user
+id: node.repository.default
+targetEntityType: node
+bundle: repository
+mode: default
+content:
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_note_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_type:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

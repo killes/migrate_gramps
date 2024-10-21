@@ -1,0 +1,29 @@
+uuid: a263d211-51ea-48b3-8ec9-922474a5beb3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_note_reference
+    - node.type.note
+    - node.type.object
+id: node.object.field_note_reference
+field_name: field_note_reference
+entity_type: node
+bundle: object
+label: 'Note reference'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      note: note
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

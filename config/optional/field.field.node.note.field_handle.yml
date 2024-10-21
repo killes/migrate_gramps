@@ -1,0 +1,19 @@
+uuid: de093b97-6c28-41d6-9b6d-2c2d42f5013f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_handle
+    - node.type.note
+id: node.note.field_handle
+field_name: field_handle
+entity_type: node
+bundle: note
+label: Handle
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

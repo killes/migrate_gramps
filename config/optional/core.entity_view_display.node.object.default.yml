@@ -1,0 +1,55 @@
+uuid: ae446936-a2e5-4478-aacc-dd79955e2db0
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.object.field_handle
+    - field.field.node.object.field_id
+    - field.field.node.object.field_note_reference
+    - field.field.node.object.field_tags
+    - node.type.object
+  module:
+    - user
+id: node.object.default
+targetEntityType: node
+bundle: object
+mode: default
+content:
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_note_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

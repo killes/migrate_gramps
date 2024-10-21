@@ -1,0 +1,45 @@
+uuid: e0a6d7dd-0f05-4737-b791-61d3876f2db0
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.family.field_child
+    - field.field.node.family.field_event_reference
+    - field.field.node.family.field_father
+    - field.field.node.family.field_handle
+    - field.field.node.family.field_id
+    - field.field.node.family.field_mother
+    - field.field.node.family.field_note_reference
+    - field.field.node.family.field_tags
+    - field.field.node.family.field_type
+    - node.type.family
+  module:
+    - user
+id: node.family.teaser
+targetEntityType: node
+bundle: family
+mode: teaser
+content:
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_child: true
+  field_event_reference: true
+  field_father: true
+  field_handle: true
+  field_id: true
+  field_mother: true
+  field_note_reference: true
+  field_type: true

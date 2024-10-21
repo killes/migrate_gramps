@@ -1,0 +1,19 @@
+uuid: ab1e6073-2c4f-4e59-948b-0b4f944377a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_handle
+    - node.type.event
+id: node.event.field_handle
+field_name: field_handle
+entity_type: node
+bundle: event
+label: Handle
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

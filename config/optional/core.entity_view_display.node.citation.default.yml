@@ -1,0 +1,73 @@
+uuid: ced3dd24-ab6e-4bba-9943-9422c7f7a933
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.citation.field_handle
+    - field.field.node.citation.field_id
+    - field.field.node.citation.field_note_reference
+    - field.field.node.citation.field_object_reference
+    - field.field.node.citation.field_source_reference
+    - field.field.node.citation.field_tags
+    - node.type.citation
+  module:
+    - user
+id: node.citation.default
+targetEntityType: node
+bundle: citation
+mode: default
+content:
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_note_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_object_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_source_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

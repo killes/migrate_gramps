@@ -1,0 +1,43 @@
+uuid: 6a33c976-3df6-4bb3-b6bc-eba0b30b74d4
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.note.body
+    - field.field.node.note.field_handle
+    - field.field.node.note.field_id
+    - field.field.node.note.field_tags
+    - node.type.note
+  module:
+    - text
+    - user
+id: node.note.teaser
+targetEntityType: node
+bundle: note
+mode: teaser
+content:
+  body:
+    type: text_summary_or_trimmed
+    label: hidden
+    settings:
+      trim_length: 600
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_handle: true
+  field_id: true

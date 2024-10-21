@@ -1,0 +1,30 @@
+uuid: 2f75d214-1875-4056-bfd5-93107c09bb8c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.taxonomy_term.tags.field_handle
+    - taxonomy.vocabulary.tags
+  module:
+    - text
+id: taxonomy_term.tags.default
+targetEntityType: taxonomy_term
+bundle: tags
+mode: default
+content:
+  description:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

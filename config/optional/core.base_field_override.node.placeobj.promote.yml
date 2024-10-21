@@ -1,0 +1,22 @@
+uuid: 70f375e2-58e1-47f1-8739-be590c6cd59a
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.placeobj
+id: node.placeobj.promote
+field_name: promote
+entity_type: node
+bundle: placeobj
+label: 'Promoted to front page'
+description: ''
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

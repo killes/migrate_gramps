@@ -1,0 +1,30 @@
+uuid: 0cff12fd-2a43-4c9b-bd94-f5dc3598ab14
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.person.field_event_reference
+    - field.field.node.person.field_gender
+    - field.field.node.person.field_handle
+    - field.field.node.person.field_id
+    - field.field.node.person.field_note_reference
+    - node.type.person
+  module:
+    - user
+id: node.person.teaser
+targetEntityType: node
+bundle: person
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_event_reference: true
+  field_gender: true
+  field_handle: true
+  field_id: true
+  field_note_reference: true

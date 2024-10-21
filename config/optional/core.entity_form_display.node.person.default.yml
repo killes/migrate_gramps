@@ -1,0 +1,114 @@
+uuid: aae3e730-40b3-4138-80a5-4b24c70ee2c1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.person.field_event_reference
+    - field.field.node.person.field_gender
+    - field.field.node.person.field_handle
+    - field.field.node.person.field_id
+    - field.field.node.person.field_note_reference
+    - node.type.person
+  module:
+    - path
+id: node.person.default
+targetEntityType: node
+bundle: person
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_event_reference:
+    type: entity_reference_autocomplete
+    weight: 124
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_gender:
+    type: string_textfield
+    weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_handle:
+    type: string_textfield
+    weight: 121
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_id:
+    type: string_textfield
+    weight: 122
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_note_reference:
+    type: entity_reference_autocomplete
+    weight: 124
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,64 @@
+uuid: 83f47048-9c0a-4fad-95ee-4c0cf17d77e4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.person.field_event_reference
+    - field.field.node.person.field_gender
+    - field.field.node.person.field_handle
+    - field.field.node.person.field_id
+    - field.field.node.person.field_note_reference
+    - node.type.person
+  module:
+    - user
+id: node.person.default
+targetEntityType: node
+bundle: person
+mode: default
+content:
+  field_event_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_gender:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_note_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

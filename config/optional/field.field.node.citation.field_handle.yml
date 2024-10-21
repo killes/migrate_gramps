@@ -1,0 +1,19 @@
+uuid: 992d7beb-b1f9-45ef-8fa4-a2cf0f564d50
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_handle
+    - node.type.citation
+id: node.citation.field_handle
+field_name: field_handle
+entity_type: node
+bundle: citation
+label: Handle
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

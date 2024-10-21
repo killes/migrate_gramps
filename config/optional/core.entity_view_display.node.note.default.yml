@@ -1,0 +1,55 @@
+uuid: 87965ea0-db3b-4c76-89ff-d68c1a888357
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.note.body
+    - field.field.node.note.field_handle
+    - field.field.node.note.field_id
+    - field.field.node.note.field_tags
+    - node.type.note
+  module:
+    - text
+    - user
+id: node.note.default
+targetEntityType: node
+bundle: note
+mode: default
+content:
+  body:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

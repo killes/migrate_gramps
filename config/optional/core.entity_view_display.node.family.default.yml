@@ -1,0 +1,100 @@
+uuid: 6b84524e-6b31-491a-a6fb-eea9a46efed5
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.family.field_child
+    - field.field.node.family.field_event_reference
+    - field.field.node.family.field_father
+    - field.field.node.family.field_handle
+    - field.field.node.family.field_id
+    - field.field.node.family.field_mother
+    - field.field.node.family.field_note_reference
+    - field.field.node.family.field_tags
+    - field.field.node.family.field_type
+    - node.type.family
+  module:
+    - user
+id: node.family.default
+targetEntityType: node
+bundle: family
+mode: default
+content:
+  field_child:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_event_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_father:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_mother:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_note_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_type:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

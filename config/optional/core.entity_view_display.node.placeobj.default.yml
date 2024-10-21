@@ -1,0 +1,109 @@
+uuid: 3da3e4b7-fb4a-424c-9d10-482e5b4c4ec4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.placeobj.field_citation_reference
+    - field.field.node.placeobj.field_handle
+    - field.field.node.placeobj.field_id
+    - field.field.node.placeobj.field_latitude
+    - field.field.node.placeobj.field_longitude
+    - field.field.node.placeobj.field_name
+    - field.field.node.placeobj.field_note_reference
+    - field.field.node.placeobj.field_place_reference
+    - field.field.node.placeobj.field_tags
+    - field.field.node.placeobj.field_type
+    - node.type.placeobj
+  module:
+    - user
+id: node.placeobj.default
+targetEntityType: node
+bundle: placeobj
+mode: default
+content:
+  field_citation_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 108
+    region: content
+  field_handle:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  field_id:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 102
+    region: content
+  field_latitude:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 107
+    region: content
+  field_longitude:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 106
+    region: content
+  field_name:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_note_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 104
+    region: content
+  field_place_reference:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 105
+    region: content
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_type:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 103
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden: {  }

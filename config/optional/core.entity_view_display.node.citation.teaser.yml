@@ -1,0 +1,39 @@
+uuid: ce38ce9e-df71-4628-bbb1-732269c5b060
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.citation.field_handle
+    - field.field.node.citation.field_id
+    - field.field.node.citation.field_note_reference
+    - field.field.node.citation.field_object_reference
+    - field.field.node.citation.field_source_reference
+    - field.field.node.citation.field_tags
+    - node.type.citation
+  module:
+    - user
+id: node.citation.teaser
+targetEntityType: node
+bundle: citation
+mode: teaser
+content:
+  field_tags:
+    type: entity_reference_label
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_handle: true
+  field_id: true
+  field_note_reference: true
+  field_object_reference: true
+  field_source_reference: true
