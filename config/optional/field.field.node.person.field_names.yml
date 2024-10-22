@@ -1,0 +1,26 @@
+uuid: 9e7409bc-abb4-4406-b4cc-7b4b39731dce
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_names
+    - node.type.person
+id: node.person.field_names
+field_name: field_names
+entity_type: node
+bundle: person
+label: Names
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:name'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

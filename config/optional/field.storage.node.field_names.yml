@@ -1,0 +1,20 @@
+uuid: 6245fa2c-ba49-4257-85d2-3be15d375755
+langcode: en
+status: true
+dependencies:
+  module:
+    - migrate_gramps
+    - node
+id: node.field_names
+field_name: field_names
+entity_type: node
+type: entity_reference
+settings:
+  target_type: name
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
