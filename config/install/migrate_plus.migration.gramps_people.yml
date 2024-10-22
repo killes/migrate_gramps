@@ -31,6 +31,9 @@ source:
     - name: src_gender
       label: 'Gender'
       selector: 'ns:gender'
+    - name: src_names
+      label: 'Names'
+      selector: ns:name
     - name: src_parentin
       label: 'Family parent reference'
       selector: ns:parentin/@hlink
@@ -70,6 +73,16 @@ process:
   field_gender:
     plugin: get
     source: src_gender
+  field_names:
+    -
+      plugin: xml_create_child_entity
+      entity_type: name
+      source: src_names
+      values:
+        first: ns:first
+        call: ns:call
+      namespaces:
+        'ns': 'http://gramps-project.org/xml/1.7.1/'
   field_event_reference:
     plugin: migration_lookup
     source: src_eventref
