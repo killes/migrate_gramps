@@ -1,0 +1,74 @@
+id: gramps_surnames
+label: 'Migration for Gramps people'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+migration_dependencies:
+  required:
+    - gramps_citations
+    - gramps_events
+    - gramps_notes
+    - gramps_tags
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  item_selector: //ns:name/surname
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../../@handle'
+    - name: src_position1
+      label: 'Position 1'
+      selector: 'count(../preceding-sibling::*[name() = "name"])'
+    - name: src_position2
+      label: 'Position 2'
+      selector: 'count(preceding-sibling::*[name() = "surname"])'
+    - name: src_value
+      label: 'Surname'
+      selector: 'self::*'
+    - name: src_prefix
+      label: 'Prefix'
+      selector: '@prefix'
+    - name: src_prim
+      label: 'Prim'
+      selector: '@prim'
+    - name: src_derivation
+      label: 'Derivation'
+      selector: '@derivation'
+    - name: src_connector
+      label: 'Connector'
+      selector: '@connector'
+  ids:
+    src_handle:
+      type: string
+    src_position1:
+      type: integer
+    src_position2:
+      type: integer
+process:
+  value:
+    plugin: get
+    source: src_value
+  prefix:
+    plugin: get
+    source: src_prefix
+  prim:
+    plugin: get
+    source: src_prim
+  derivation:
+    plugin: get
+    source: src_derivation
+  connector:
+    plugin: get
+    source: src_connector
+destination:
+  plugin: 'entity:surname'

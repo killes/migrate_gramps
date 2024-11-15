@@ -1,0 +1,110 @@
+uuid: 064d8c85-c5cc-4f1f-8998-95faf422f509
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_gramps
+_core:
+  default_config_hash: '-9Va5o6xYUryeSYxTmWrgoIqm54W_CxgDhhwrOq1qxQ'
+id: gramps_places
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: gramps
+label: 'Migration for Gramps places'
+source:
+  item_selector: '//ns:placeobj'
+  fields:
+    -
+      name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    -
+      name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    -
+      name: src_id
+      label: id
+      selector: '@id'
+    -
+      name: src_type
+      label: Type
+      selector: '@type'
+    -
+      name: src_ptitle
+      label: PTitle
+      selector: 'ns:ptitle'
+    -
+      name: src_pname
+      label: Name
+      selector: 'ns:pname/@value'
+    -
+      name: src_citationref
+      label: 'Citation Reference'
+      selector: 'ns:citationref/@hlink'
+    -
+      name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+    -
+      name: src_objref
+      label: 'Object Reference'
+      selector: 'ns:objref/@hlink'
+    -
+      name: src_placeref
+      label: 'Place reference'
+      selector: 'ns:placeref/@hlink'
+    -
+      name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  field_type:
+    plugin: get
+    source: src_type
+  title:
+    plugin: get
+    source: src_pname
+  field_name:
+    plugin: get
+    source: src_ptitle
+  changed:
+    plugin: get
+    source: src_changed
+  field_note_reference:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+  field_object_reference:
+    plugin: migration_lookup
+    source: src_objref
+    migration: gramps_objects
+  field_place_reference:
+    plugin: migration_lookup
+    source: src_placeref
+    migration: gramps_places
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
+destination:
+  plugin: 'entity:node'
+  default_bundle: placeobj
+migration_dependencies:
+  required:
+    - gramps_citations
+    - gramps_notes
+    - gramps_objects
+    - gramps_tags

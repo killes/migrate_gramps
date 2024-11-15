@@ -7,7 +7,6 @@ dependencies:
     - field.field.node.person.field_gender
     - field.field.node.person.field_handle
     - field.field.node.person.field_id
-    - field.field.node.person.field_names
     - field.field.node.person.field_note_reference
     - node.type.person
   module:
@@ -48,14 +47,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 102
-    region: content
-  field_names:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 105
     region: content
   field_note_reference:
     type: entity_reference_label

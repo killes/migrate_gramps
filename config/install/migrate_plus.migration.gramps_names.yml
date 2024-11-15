@@ -1,0 +1,156 @@
+id: gramps_names
+label: 'Migration for Gramps names'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+#migration_dependencies:
+#  required:
+#    - gramps_citations
+#    - gramps_notes
+#    - gramps_surnames
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  constants:
+    ID: 'id'
+  item_selector: //ns:person/name
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+    - name: src_position
+      label: 'Position'
+      selector: 'count(preceding-sibling::*[name() = "name"])'
+    - name: src_alt
+      label: 'Alt'
+      selector: '@alt'
+    - name: src_type
+      label: 'Type of name'
+      selector: '@type'
+    - name: src_priv
+      label: 'Priv'
+      selector: '@priv'
+    - name: src_sort
+      label: 'Sort'
+      selector: '@sort'
+    - name: src_display
+      label: 'Display'
+      selector: '@display'
+
+    - name: src_first
+      label: 'First Names'
+      selector: ns:first
+    - name: src_call
+      label: 'Call Names'
+      selector: ns:call
+    - name: src_suffix
+      label: 'Suffix'
+      selector: ns:suffix
+    - name: src_title
+      label: 'Title'
+      selector: ns:title
+    - name: src_nick
+      label: 'Nick Names'
+      selector: ns:nick
+    - name: src_familynick
+      label: 'Family Nick'
+      selector: ns:familynick
+    - name: src_group
+      label: 'Group'
+      selector: ns:group
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+  ids:
+    src_handle:
+      type: string
+    src_position:
+      type: integer
+process:
+  alt:
+    plugin: get
+    source: src_alt
+  type:
+    plugin: get
+    source: src_type
+  priv:
+    plugin: get
+    source: src_priv
+  sort:
+    plugin: get
+    source: src_sort
+  display:
+    plugin: get
+    source: src_display
+  first:
+    plugin: get
+    source: src_first
+  call:
+    plugin: get
+    source: src_call
+  suffix:
+    plugin: get
+    source: src_suffix
+  title:
+    plugin: get
+    source: src_title
+  nick:
+    plugin: get
+    source: src_nick
+  familynick:
+    plugin: get
+    source: src_familynick
+  group:
+    plugin: get
+    source: src_group
+  # TODO: Date
+
+  # "allow_multiple" relies on patch 105 from
+  # https://www.drupal.org/project/drupal/issues/2890844
+  # Also, we have to rely on the names being created in the correct order.
+  # It would be nice if we could order by our secondary ID.
+  sn:
+    plugin: migration_lookup
+    source: src_handle
+    migration:
+      - gramps_surnames
+    source_ids:
+      gramps_surnames:
+        - src_handle
+        - src_position
+    allow_multiple: true
+  # We need to extract the values we want from the "id" column.
+  surname:
+    -
+      plugin: skip_on_empty
+      source: '@sn'
+      method: process
+    -
+      plugin: callback
+      callable: array_column
+      unpack_source: true
+      source:
+        - '@sn'
+        - constants/ID
+  citations:
+    plugin: migration_lookup
+    source: src_citationref
+    migration: gramps_citations
+  notes:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+destination:
+  plugin: 'entity:name'

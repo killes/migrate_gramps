@@ -13,9 +13,17 @@ migration_dependencies:
     - gramps_events
     - gramps_notes
     - gramps_tags
+    - gramps_names
 source:
+  track_changes: true
+#  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    # - sites/default/files/example.gramps.orig
+    - sites/default/files/example.gramps.orig
   constants:
     TITLE_PREFIX: 'Gramps person '
+    ID: 'id'
 
   item_selector: //ns:person
   fields:
@@ -31,9 +39,6 @@ source:
     - name: src_gender
       label: 'Gender'
       selector: 'ns:gender'
-    - name: src_names
-      label: 'Names'
-      selector: ns:name
     - name: src_parentin
       label: 'Family parent reference'
       selector: ns:parentin/@hlink
@@ -73,16 +78,23 @@ process:
   field_gender:
     plugin: get
     source: src_gender
+  # "allow_multiple" relies on patch 105 from
+  # https://www.drupal.org/project/drupal/issues/2890844
+  # Also, we have to rely on the names being created in the correct order.
+  # It would be nice if we could order by our secondary ID.
+  names:
+    plugin: migration_lookup
+    source: src_handle
+    migration: gramps_names
+    allow_multiple: true
+  # We need to extract the values we want from the "id" column.
   field_names:
-    -
-      plugin: xml_create_child_entity
-      entity_type: name
-      source: src_names
-      values:
-        first: ns:first
-        call: ns:call
-      namespaces:
-        'ns': 'http://gramps-project.org/xml/1.7.1/'
+    plugin: callback
+    callable: array_column
+    unpack_source: true
+    source:
+      - '@names'
+      - constants/ID
   field_event_reference:
     plugin: migration_lookup
     source: src_eventref

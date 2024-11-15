@@ -1,0 +1,59 @@
+uuid: 415e32c2-29e9-4f92-ae32-7767efa2caaf
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_gramps
+_core:
+  default_config_hash: 6WnuDuRZfj1_tg0dfiJ1bEBSqB6-f2d0ZQaUoKMjnkc
+id: gramps_tags
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: gramps
+label: 'Migration for Gramps tags'
+source:
+  item_selector: '//ns:tag'
+  fields:
+    -
+      name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    -
+      name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    -
+      name: src_name
+      label: name
+      selector: '@name'
+    -
+      name: src_color
+      label: Colour
+      selector: '@color'
+    -
+      name: src_priority
+      label: Priority
+      selector: '@priority'
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  name:
+    plugin: get
+    source: src_name
+  changed:
+    plugin: get
+    source: src_changed
+  weight:
+    plugin: get
+    source: src_priority
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: tags
+migration_dependencies: null

@@ -103,10 +103,10 @@ class Name extends ContentEntityBase implements ContentEntityInterface {
       ->setReadOnly(TRUE);
 
     $fields['date'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Surname'))
+      ->setLabel(t('Date'))
       ->setDescription(t('The Date field of the Name entity.'))
       ->setSettings([
-        'target_type' => 'date',
+        'target_type' => 'gramps_date',
       ])
       ->setReadOnly(TRUE);
 

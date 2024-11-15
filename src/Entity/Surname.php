@@ -40,6 +40,11 @@ class Surname extends ContentEntityBase implements ContentEntityInterface {
 
     // All fields below match the surname definition from grampsxml.dtd.
 
+    $fields['value'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Value'))
+      ->setDescription(t('The value field of the Surname entity.'))
+      ->setReadOnly(TRUE);
+
     $fields['prefix'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Prefix'))
       ->setDescription(t('The Prefix field of the Surname entity.'))

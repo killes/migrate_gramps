@@ -1,0 +1,92 @@
+uuid: 02ac6f32-74db-45b8-8685-4acff8b93672
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - migrate_gramps
+_core:
+  default_config_hash: Q52w2eVRc6K8RkE2ugN_Bi8mWoced6KuWFrzxknxMck
+id: gramps_sources
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags: null
+migration_group: gramps
+label: null
+source:
+  constants:
+    TITLE_PREFIX: 'Gramps source '
+  item_selector: '//ns:source'
+  fields:
+    -
+      name: src_handle
+      label: 'Gramps handle'
+      selector: '@handle'
+    -
+      name: src_changed
+      label: 'Last changed'
+      selector: '@change'
+    -
+      name: src_id
+      label: id
+      selector: '@id'
+    -
+      name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+    -
+      name: src_objref
+      label: 'Object Reference'
+      selector: 'ns:objref/@hlink'
+    -
+      name: src_reporef
+      label: 'Repository Reference'
+      selector: 'ns:reporef/@hlink'
+    -
+      name: src_tags
+      label: 'Tag Reference'
+      selector: 'ns:tagref/@hlink'
+  ids:
+    src_handle:
+      type: string
+process:
+  field_handle:
+    plugin: get
+    source: src_handle
+  field_id:
+    plugin: get
+    source: src_id
+  title:
+    plugin: concat
+    source:
+      - constants/TITLE_PREFIX
+      - src_id
+  changed:
+    plugin: get
+    source: src_changed
+  field_note_reference:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+  field_object_reference:
+    plugin: migration_lookup
+    source: src_objref
+    migration: gramps_objects
+  field_repository_reference:
+    plugin: migration_lookup
+    source: src_reporef
+    migration: gramps_repositories
+  field_tags:
+    plugin: migration_lookup
+    source: src_tags
+    migration: gramps_tags
+destination:
+  plugin: 'entity:node'
+  default_bundle: source
+migration_dependencies:
+  required:
+    - gramps_notes
+    - gramps_objects
+    - gramps_repositories
+    - gramps_tags

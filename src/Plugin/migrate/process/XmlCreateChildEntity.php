@@ -2,12 +2,14 @@
 
 namespace Drupal\migrate_gramps\Plugin\migrate\process;
 
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
+use Drupal\migrate_plus\Plugin\migrate\process\EntityLookup;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -40,6 +42,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     values:
  *       first: ns:first
  *       call: ns:call
+ *     namespaces:
+ *      'ns': 'http://...'
  * @endcode
  *
  */
@@ -71,14 +75,23 @@ class XmlCreateChildEntity extends ProcessPluginBase implements ContainerFactory
       ->getStorage($this->configuration['entity_type']);
 
     $values = [];
-    if (isset($this->configuration['bundle']) && $bundle = $this->configuration['bundle']) {
-      $values[$definition->getKey('bundle')] = $bundle;
-    }
 
     foreach ($this->configuration['values'] ?? [] as $fieldName => $xpath) {
+      if ($fieldName == 'sub_entity') {
+        foreach ($xpath as $sub_values) {
+          $this->createSubEntities($value, $sub_values);
+        }
+        continue;
+      }
       $this->registerNamespaces($value);
       $fieldValue = NULL;
+
+      var_dump($fieldName, $xpath);
       foreach ($value->xpath($xpath) as $match) {
+        if ($xpath == 'ns:surname') {
+          var_dump($value);
+          var_dump($match);
+        }
         if ($match->children() && !trim((string) $match)) {
           $fieldValue = $match;
         }
@@ -86,7 +99,7 @@ class XmlCreateChildEntity extends ProcessPluginBase implements ContainerFactory
           $fieldValue = (string) $match;
         }
       }
-
+      var_dump($fieldName, $fieldValue);
       NestedArray::setValue($values, explode(Row::PROPERTY_SEPARATOR, $fieldName), $fieldValue, TRUE);
     }
     foreach ($this->configuration['default_values'] ?? [] as $fieldName => $fieldValue) {
@@ -111,5 +124,16 @@ class XmlCreateChildEntity extends ProcessPluginBase implements ContainerFactory
         $xml->registerXPathNamespace($prefix, $ns);
       }
     }
+  }
+
+  /**
+   * Return sub entities.
+   *
+   * @param \array $values
+   *   Fields and values.
+   */
+  protected function createSubEntities(\SimpleXMLElement $xml, array $values): array {
+    var_dump($values);
+    return [];
   }
 }
