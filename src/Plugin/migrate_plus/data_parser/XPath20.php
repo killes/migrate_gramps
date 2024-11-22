@@ -137,7 +137,7 @@ class Xpath20 extends DataParserPluginBase {
         $expression = XPath2Expression::Compile($xpath, $this->nsMgr);
         $vars = [];
         $result = $expression->EvaluateWithVars($provider, $vars);
-        if (\is_int($result)) {
+        if (\is_int($result) || \is_string($result)) {
           $this->currentItem[$field_name][] = $result;
           continue;
         }

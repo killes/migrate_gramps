@@ -6,10 +6,9 @@ namespace Drupal\migrate_gramps\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\migrate_gramps\BundleFieldDefinition;
 use Drupal\migrate_gramps\GrampsDateInterface;
-
 
 /**
  * Defines the gramps date entity class.
@@ -43,6 +42,7 @@ use Drupal\migrate_gramps\GrampsDateInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "bundle" = "bundle",
+ *     "label" = "label",
  *     "uuid" = "uuid",
  *   },
  *   links = {
@@ -55,65 +55,130 @@ use Drupal\migrate_gramps\GrampsDateInterface;
  *     "delete-multiple-form" = "/admin/content/gramps-date/delete-multiple",
  *   },
  *   bundle_entity_type = "gramps_date_type",
+ *   field_ui_base_route = "entity.gramps_date_type.edit_form",
  * )
  */
-final class GrampsDate extends ContentEntityBase implements GrampsDateInterface {
+class GrampsDate extends ContentEntityBase implements GrampsDateInterface {
 
   /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type): array {
 
-    // Standard field, used as unique if primary index.
-    $fields['id'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('ID'))
-      ->setDescription(t('The ID of the Name entity.'))
-      ->setReadOnly(TRUE);
+    $fields = parent::baseFieldDefinitions($entity_type);
 
-    // Standard field, unique outside of the scope of the current project.
-    $fields['uuid'] = BaseFieldDefinition::create('uuid')
-      ->setLabel(t('UUID'))
-      ->setDescription(t('The UUID of the Name entity.'))
-      ->setReadOnly(TRUE);
-
-    $fields['bundle'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Bundle'))
-      ->setDescription(t('The bundle of the Gramps Date entity.'))
+    $fields['label'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Label'))
       ->setRequired(TRUE)
-      ->setReadOnly(TRUE);
+      ->setSetting('max_length', 255)
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -5,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayOptions('view', [
+        'label' => 'hidden',
+        'type' => 'string',
+        'weight' => -5,
+      ])
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }
 
-  public static function bundleFieldDefinitions(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) : array {
-    if ($gramps_date_type = GrampsDateType::load($bundle)) {
-      $fields = [];
+  /**
+   * {@inheritdoc}
+   */
+  public static function bundleFieldDefinitions(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
+    var_dump($bundle);
+    $fields = [];
 
-      var_dump($gramps_date_type->id());
-      switch ($gramps_date_type->id()) {
-        case 'datestr':
-          $fields['value'] = BundleFieldDefinition::create('string')
-            ->setLabel(t('Value'))
-            ->setSetting('max_length', 255)
-            ->setDisplayOptions('form', [
-              'type' => 'string_textfield',
-              'weight' => -5,
-            ])
-            ->setDisplayOptions('view', [
-              'label' => 'hidden',
-              'type' => 'string',
-              'weight' => -5,
-            ])
-            ->setDisplayConfigurable('view', TRUE);
-        case 'dateval':
-        case 'daterange':
-        case 'datespan':
-        default:
-          return [];
-      }
-      var_dump($gramps_date_type->id());
-      return $fields;
+    if ($bundle == 'datestr') {
+      $fields['datestr'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Value'))
+        ->setDescription(t('The value of the Gramps Date entity of bundle datestr.'))
+        ->setSetting('max_length', 255)
+        ->setDisplayOptions('form', [
+          'type' => 'string_textfield',
+          'weight' => -5,
+        ])
+        ->setDisplayConfigurable('form', TRUE);
     }
-  }
+    if ($bundle == 'dateval') {
+      # This should be a Date field, however neither Drupal nor SQL deal well
+      # with Gramps' idea of a date.
+      $fields['dateval'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Value'))
+        ->setDescription(t('The value of the Gramps Date entity of bundle dateval.'))
+        ->setSetting('max_length', 255)
+        ->setDisplayOptions('form', [
+          'type' => 'string_textfield',
+          'weight' => -5,
+        ])
+        ->setDisplayConfigurable('form', TRUE);
+      $fields['type'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Type'))
+        ->setDescription(t('The type of the Gramps Date entity.'));
+    }
+    if ($bundle == 'daterange' || $bundle == 'datespan') {
+      # These should be Date fields, however neither Drupal nor SQL deal well
+      # with Gramps' idea of a date.
+      $fields['start'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Value'))
+        ->setDescription(t('The stsrt date of the Gramps Date entity.'))
+        ->setSetting('max_length', 255)
+        ->setDisplayOptions('form', [
+          'type' => 'string_textfield',
+          'weight' => -5,
+        ])
+        ->setDisplayConfigurable('form', TRUE);
+      $fields['stop'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Value'))
+        ->setDescription(t('The end date of the Gramps Date entity.'))
+        ->setSetting('max_length', 255)
+        ->setDisplayOptions('form', [
+          'type' => 'string_textfield',
+          'weight' => -5,
+        ])
+        ->setDisplayConfigurable('form', TRUE);
+    }
+    if (in_array($bundle, ['dateval', 'daterange', 'datespan'])) {
+      $fields['cformat'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Calendar format'))
+        ->setDescription(t('The cformat of the Gramps Date entity.'))
+        ->setReadOnly(TRUE);
+      $fields['quality'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Quality'))
+        ->setDescription(t('The quality of the Gramps Date entity.'))
+        ->setReadOnly(TRUE);
+      $fields['dualdated'] = BundleFieldDefinition::create('integer')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('Dual dated'))
+        ->setDescription(t('Whether the Gramps Date entity is dual dated.'))
+        ->setReadOnly(TRUE);
+      $fields['newyear'] = BundleFieldDefinition::create('string')
+        ->setTargetEntityTypeId($entity_type->id())
+        ->setTargetBundle($bundle)
+        ->setLabel(t('New year'))
+        ->setDescription(t('When the new year starts for the Gramps Date entity.'))
+        ->setReadOnly(TRUE);
+    }
 
+    return $fields;
+  }
 }

@@ -9,6 +9,7 @@ dependencies:
 migration_dependencies:
   required:
     - gramps_citations
+    - gramps_dates_primary
     - gramps_notes
     - gramps_places
     - gramps_objects
@@ -72,6 +73,10 @@ process:
     plugin: migration_lookup
     source: src_citationref
     migration: gramps_citations
+  field_date:
+    plugin: migration_lookup
+    source: src_handle
+    migration: gramps_dates_primary
   field_place_reference:
     plugin: migration_lookup
     source: src_placeref

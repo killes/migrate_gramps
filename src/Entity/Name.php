@@ -108,6 +108,14 @@ class Name extends ContentEntityBase implements ContentEntityInterface {
       ->setSettings([
         'target_type' => 'gramps_date',
       ])
+      ->setSetting('handler_settings', [
+        'target_bundles' => [
+          'gramps_date_datestr' => 'gramps_date_datestr',
+          'gramps_date_dateval' => 'gramps_date_dateval',
+          'gramps_date_daterange' => 'gramps_date_daterange',
+          'gramps_date_datespan' => 'gramps_date_datespan',
+        ]
+      ])
       ->setReadOnly(TRUE);
 
     $fields['surname'] = BaseFieldDefinition::create('entity_reference')

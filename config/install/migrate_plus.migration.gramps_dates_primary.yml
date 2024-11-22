@@ -1,0 +1,94 @@
+id: gramps_dates_primary
+label: 'Migration for Gramps dates of primary gramps objects'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_dependencies:
+  required:
+    - gramps_citations
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    # - sites/default/files/example.gramps.orig
+    - sites/default/files/example.gramps.short
+
+  item_selector: '//(ns:family|ns:event|ns:citation)/(dateval|datestr|daterange|datespan)'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+      # used to get the bundle
+    - name: xml_element
+      label: 'XML element'
+      selector: 'fn:name()'
+      # Datestr and Dateval
+    - name: src_val
+      label: 'Value'
+      selector: '@val'
+      # Dateval only
+    - name: src_type
+      label: 'Type'
+      selector: '@type'
+      # Daterange, Datespan
+    - name: src_start
+      label: 'Start'
+      selector: '@start'
+    - name: src_stop
+      label: 'Stop'
+      selector: '@stop'
+      # Dateval, Daterange, Datespan
+    - name: src_cformat
+      label: 'Cformat'
+      selector: '@cformat'
+    - name: src_quality
+      label: 'Quality'
+      selector: '@quality'
+    - name: src_dualdated
+      label: 'Dual dated'
+      selector: '@dualdated'
+    - name: src_newyear
+      label: 'New year'
+      selector: '@newyear'
+  ids:
+    src_handle:
+      type: string
+process:
+  bundle:
+    plugin: get
+    source: xml_element
+  datestr:
+    plugin: get
+    source: src_val
+  dateval:
+    plugin: get
+    source: src_val
+  start:
+    plugin: get
+    source: src_start
+  stop:
+    plugin: get
+    source: src_stop
+  type:
+    plugin: get
+    source: src_type
+  cformat:
+    plugin: get
+    source: src_cformat
+  quality:
+    plugin: get
+    source: src_quality
+  dualdated:
+    plugin: get
+    source: src_dualdated
+  newyear:
+    plugin: get
+    source: src_newyear
+destination:
+  plugin: 'entity:gramps_date'
+  bundle: '@bundle'
