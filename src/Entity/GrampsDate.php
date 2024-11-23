@@ -90,11 +90,12 @@ class GrampsDate extends ContentEntityBase implements GrampsDateInterface {
    * {@inheritdoc}
    */
   public static function bundleFieldDefinitions(EntityTypeInterface $entity_type, $bundle, array $base_field_definitions) {
-    var_dump($bundle);
-    $fields = [];
 
+    $fields = [];
+    // The date fields are all the same so the values end up in the same
+    // database table to facilitate sorting.
     if ($bundle == 'datestr') {
-      $fields['datestr'] = BundleFieldDefinition::create('string')
+      $fields['value'] = BundleFieldDefinition::create('string')
         ->setTargetEntityTypeId($entity_type->id())
         ->setTargetBundle($bundle)
         ->setLabel(t('Value'))
@@ -109,7 +110,7 @@ class GrampsDate extends ContentEntityBase implements GrampsDateInterface {
     if ($bundle == 'dateval') {
       # This should be a Date field, however neither Drupal nor SQL deal well
       # with Gramps' idea of a date.
-      $fields['dateval'] = BundleFieldDefinition::create('string')
+      $fields['value'] = BundleFieldDefinition::create('string')
         ->setTargetEntityTypeId($entity_type->id())
         ->setTargetBundle($bundle)
         ->setLabel(t('Value'))
@@ -129,22 +130,12 @@ class GrampsDate extends ContentEntityBase implements GrampsDateInterface {
     if ($bundle == 'daterange' || $bundle == 'datespan') {
       # These should be Date fields, however neither Drupal nor SQL deal well
       # with Gramps' idea of a date.
-      $fields['start'] = BundleFieldDefinition::create('string')
+      $fields['value'] = BundleFieldDefinition::create('list_string')
         ->setTargetEntityTypeId($entity_type->id())
         ->setTargetBundle($bundle)
+        ->setCardinality(2)
         ->setLabel(t('Value'))
-        ->setDescription(t('The stsrt date of the Gramps Date entity.'))
-        ->setSetting('max_length', 255)
-        ->setDisplayOptions('form', [
-          'type' => 'string_textfield',
-          'weight' => -5,
-        ])
-        ->setDisplayConfigurable('form', TRUE);
-      $fields['stop'] = BundleFieldDefinition::create('string')
-        ->setTargetEntityTypeId($entity_type->id())
-        ->setTargetBundle($bundle)
-        ->setLabel(t('Value'))
-        ->setDescription(t('The end date of the Gramps Date entity.'))
+        ->setDescription(t('The start and end date of the Gramps Date entity.'))
         ->setSetting('max_length', 255)
         ->setDisplayOptions('form', [
           'type' => 'string_textfield',
