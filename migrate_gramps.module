@@ -1,0 +1,75 @@
+<?php
+declare(strict_types=1);
+
+use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+
+/**
+ * Implements hook_entity_bundle_info().
+ */
+function migrate_gramps_entity_bundle_info() {
+  $bundles['gramps_date'] = [
+    'datestr' => [
+      'label' => t('Datestr'),
+      'description' => t('Gramps date of type "datestr", a freely defined text string.')
+    ],
+    'dateval' => [
+      'label' => t('Dateval'),
+      'description' => t('Gramps date of type "dateval", a year with optional month and day and various extras.')
+    ],
+    'daterange' => [
+      'label' => t('Daterange'),
+      'description' => t('Gramps date of type "daterange", a range consisting of two dates.')
+    ],
+    'datespan' => [
+      'label' => t('Datespan'),
+      'description' => t('Gramps date of type "datespan", a span consisting of two dates.')
+    ],
+  ];
+
+  return $bundles;
+}
+
+/**
+ * Implements hook_entity_bundle_info_alter().
+ */
+function migrate_gramps_entity_bundle_info_alter(array &$bundles): void {
+  if (isset($bundles['gramps_date']['datestr'])) {
+    // phpcs:ignore Drupal.Classes.FullyQualifiedNamespace.UseStatementMissing
+    $bundles['gramps_date']['datestr']['class'] = \Drupal\migrate_gramps\Entity\GrampsDate\Datestr::class;
+  }
+  if (isset($bundles['gramps_date']['dateval'])) {
+    // phpcs:ignore Drupal.Classes.FullyQualifiedNamespace.UseStatementMissing
+    $bundles['gramps_date']['dateval']['class'] = \Drupal\migrate_gramps\Entity\GrampsDate\Dateval::class;
+  }
+  if (isset($bundles['gramps_date']['daterange'])) {
+    // phpcs:ignore Drupal.Classes.FullyQualifiedNamespace.UseStatementMissing
+    $bundles['gramps_date']['daterange']['class'] = \Drupal\migrate_gramps\Entity\GrampsDate\Daterange::class;
+  }
+  if (isset($bundles['gramps_date']['datespan'])) {
+    // phpcs:ignore Drupal.Classes.FullyQualifiedNamespace.UseStatementMissing
+    $bundles['gramps_date']['datespan']['class'] = \Drupal\migrate_gramps\Entity\GrampsDate\Datespan::class;
+  }
+}
+
+/**
+ * Implements hook_entity_field_storage_info().
+ */
+function migrate_gramps_entity_field_storage_info(EntityTypeInterface $entity_type) {
+  if ($entity_type->id() == 'gramps_date') {
+    $definitions = [];
+    $bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('gramps_date');
+    foreach ($bundles as $bundle_id => $bundle_info) {
+      if (isset($bundle_info['class'])) {
+        $class = '\Drupal\migrate_gramps\Entity\GrampsDate';
+        if (class_exists($class)) {
+          $bundle_defs = $class::bundleFieldDefinitions($entity_type, $bundle_id, []);
+          $definitions = array_merge($definitions, $bundle_defs);
+        }
+      }
+    }
+    return $definitions;
+  }
+}
