@@ -1,0 +1,31 @@
+uuid: 757a8d15-9d81-4451-91a5-aec25413374e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_date
+    - node.type.event
+id: node.event.field_date
+field_name: field_date
+entity_type: node
+bundle: event
+label: Date
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:gramps_date'
+  handler_settings:
+    target_bundles:
+      daterange: daterange
+      datespan: datespan
+      datestr: datestr
+      dateval: dateval
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: daterange
+field_type: entity_reference

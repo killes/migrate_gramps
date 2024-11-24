@@ -1,0 +1,29 @@
+uuid: 7946b588-0e3e-4109-ab13-508ce48819ba
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_repository_reference
+    - node.type.repository
+    - node.type.source
+id: node.source.field_repository_reference
+field_name: field_repository_reference
+entity_type: node
+bundle: source
+label: 'Repository reference'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      repository: repository
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

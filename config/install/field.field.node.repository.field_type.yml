@@ -1,0 +1,19 @@
+uuid: 0f63154c-8c73-449d-8a4c-137fef6b85ab
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_type
+    - node.type.repository
+id: node.repository.field_type
+field_name: field_type
+entity_type: node
+bundle: repository
+label: Type
+description: 'The type can be set by the user in Gramps.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

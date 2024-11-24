@@ -1,0 +1,19 @@
+uuid: 25846a1a-1119-4a7a-b615-cb63501fda50
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_id
+    - node.type.source
+id: node.source.field_id
+field_name: field_id
+entity_type: node
+bundle: source
+label: ID
+description: 'The ID from Gramps. This is different from the handle as it can be changed by the user in Gramps. Therefore it may not be unique.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,19 @@
+uuid: 14cb0e63-8db7-418b-8875-8d9ad7a96c7b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_type
+    - node.type.placeobj
+id: node.placeobj.field_type
+field_name: field_type
+entity_type: node
+bundle: placeobj
+label: Type
+description: 'The type can be set by the user in Gramps.'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
