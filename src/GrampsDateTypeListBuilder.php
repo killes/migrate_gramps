@@ -30,19 +30,4 @@ final class GrampsDateTypeListBuilder extends ConfigEntityListBuilder {
     $row['label'] = $entity->label();
     return $row + parent::buildRow($entity);
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function render(): array {
-    $build = parent::render();
-
-    $build['table']['#empty'] = $this->t(
-      'No gramps date types available. <a href=":link">Add gramps date type</a>.',
-      [':link' => Url::fromRoute('entity.gramps_date_type.add_form')->toString()],
-    );
-
-    return $build;
-  }
-
 }

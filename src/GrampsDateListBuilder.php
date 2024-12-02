@@ -17,7 +17,6 @@ final class GrampsDateListBuilder extends EntityListBuilder {
    */
   public function buildHeader(): array {
     $header['id'] = $this->t('ID');
-    $header['label'] = $this->t('Label');
     return $header + parent::buildHeader();
   }
 
@@ -27,7 +26,6 @@ final class GrampsDateListBuilder extends EntityListBuilder {
   public function buildRow(EntityInterface $entity): array {
     /** @var \Drupal\migrate_gramps\GrampsDateInterface $entity */
     $row['id'] = $entity->id();
-    $row['label'] = $entity->label();
     return $row + parent::buildRow($entity);
   }
 

@@ -26,17 +26,7 @@ class Name extends ContentEntityBase implements ContentEntityInterface {
 
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
-    // Standard field, used as unique if primary index.
-    $fields['id'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('ID'))
-      ->setDescription(t('The ID of the Name entity.'))
-      ->setReadOnly(TRUE);
-
-    // Standard field, unique outside of the scope of the current project.
-    $fields['uuid'] = BaseFieldDefinition::create('uuid')
-      ->setLabel(t('UUID'))
-      ->setDescription(t('The UUID of the Name entity.'))
-      ->setReadOnly(TRUE);
+    $fields = parent::baseFieldDefinitions($entity_type);
 
     // All fields below match the name definition from grampsxml.dtd.
 
@@ -52,7 +42,7 @@ class Name extends ContentEntityBase implements ContentEntityInterface {
       ->setReadOnly(TRUE);
 
     $fields['priv'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Alt'))
+      ->setLabel(t('Priv'))
       ->setDescription(t('The Priv field of the Name entity.'))
       ->setReadOnly(TRUE);
 

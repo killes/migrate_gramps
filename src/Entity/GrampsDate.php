@@ -27,32 +27,16 @@ use Drupal\migrate_gramps\GrampsDateInterface;
  *   handlers = {
  *     "list_builder" = "Drupal\migrate_gramps\GrampsDateListBuilder",
  *     "views_data" = "Drupal\views\EntityViewsData",
- *     "form" = {
- *       "add" = "Drupal\migrate_gramps\Form\GrampsDateForm",
- *       "edit" = "Drupal\migrate_gramps\Form\GrampsDateForm",
- *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
- *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
- *     },
- *     "route_provider" = {
- *       "html" = "Drupal\migrate_gramps\Routing\GrampsDateHtmlRouteProvider",
- *     },
  *   },
  *   base_table = "gramps_date",
  *   admin_permission = "administer gramps_date types",
  *   entity_keys = {
  *     "id" = "id",
  *     "bundle" = "bundle",
- *     "label" = "label",
  *     "uuid" = "uuid",
  *   },
  *   links = {
  *     "collection" = "/admin/content/gramps-date",
- *     "add-form" = "/gramps-date/add/{gramps_date_type}",
- *     "add-page" = "/gramps-date/add",
- *     "canonical" = "/gramps-date/{gramps_date}",
- *     "edit-form" = "/gramps-date/{gramps_date}",
- *     "delete-form" = "/gramps-date/{gramps_date}/delete",
- *     "delete-multiple-form" = "/admin/content/gramps-date/delete-multiple",
  *   },
  *   bundle_entity_type = "gramps_date_type",
  *   field_ui_base_route = "entity.gramps_date_type.edit_form",
