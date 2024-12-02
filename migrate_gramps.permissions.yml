@@ -11,3 +11,7 @@ administer gramps_address:
 administer gramps_attribute:
   title: 'Administer gramps attributes'
   restrict access: true
+
+administer gramps_source_attribute:
+  title: 'Administer gramps source attributes'
+  restrict access: true
