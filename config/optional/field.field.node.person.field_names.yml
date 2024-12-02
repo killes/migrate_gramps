@@ -5,6 +5,8 @@ dependencies:
   config:
     - field.storage.node.field_names
     - node.type.person
+_core:
+  default_config_hash: yDX8_1iTz7zltRwYJ1OVk3tnKEQl3W6WTndizLpkwvM
 id: node.person.field_names
 field_name: field_names
 entity_type: node

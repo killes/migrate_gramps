@@ -5,6 +5,8 @@ dependencies:
   module:
     - migrate_gramps
     - node
+_core:
+  default_config_hash: PbSJbkZWNfVuC3UvYs3fLUedsMPUcghWl4Vej3gPCJM
 id: node.field_names
 field_name: field_names
 entity_type: node
