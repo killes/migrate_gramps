@@ -24,6 +24,9 @@ source:
     - name: xml_element
       label: 'XML element'
       selector: 'fn:name()'
+    - name: xml_parent
+      label: 'Parent element'
+      selector: 'fn:name(parent::*)'
       # Datestr and Dateval
     - name: src_val
       label: 'Value'
@@ -54,6 +57,8 @@ source:
       selector: '@newyear'
   ids:
     src_handle:
+      type: string
+    xml_parent:
       type: string
 process:
   bundle:

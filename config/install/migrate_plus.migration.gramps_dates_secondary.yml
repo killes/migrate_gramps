@@ -22,11 +22,15 @@ source:
       selector: '../../@handle'
     - name: src_position1
       label: 'Position 1'
-      selector: 'count(../preceding-sibling::*[name() = "address"]name() = "name"||)'
+      selector: 'count(../preceding-sibling::*[self::address | self::name])'
       # used to get the bundle
     - name: xml_element
       label: 'XML element'
       selector: 'fn:name()'
+      # used to get the parent
+    - name: xml_parent
+      label: 'Parent element'
+      selector: 'fn:name(parent::*)'
       # Datestr and Dateval
     - name: src_val
       label: 'Value'
@@ -58,13 +62,15 @@ source:
   ids:
     src_handle:
       type: string
+    xml_parent:
+      type: string
     src_position1:
       type: integer
 process:
   bundle:
     plugin: get
     source: xml_element
-  # All values fo into the same field to facilitate sorting.
+  # All values go into the same field to facilitate sorting.
   value:
     plugin: mergedate
     bundle: '@bundle'

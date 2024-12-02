@@ -20,13 +20,17 @@ source:
     - name: src_handle
       label: 'Gramps handle'
       selector: '../@handle'
+      # used to get the parent bundle
+    - name: xml_parent
+      label: 'XML element'
+      selector: 'fn:name(parent::*)'
     - name: src_position
       label: 'Position'
-      selector: 'count(preceding-sibling::*[name() = "address"])'
+      selector: 'count(preceding-sibling::*[self::address])'
     - name: src_priv
       label: 'Priv'
       selector: '@priv'
-    # date
+    # date is migrated separately
     - name: src_street
       label: 'Street'
       selector: 'ns:street'
@@ -61,13 +65,21 @@ source:
   ids:
     src_handle:
       type: string
+    xml_parent:
+      type: string
     src_position:
       type: integer
 process:
   priv:
     plugin: get
     source: src_privt
-  # TODO: Date
+  date:
+    plugin: migration_lookup
+    source:
+      - src_handle
+      - 'address'
+      - src_position
+    migration: gramps_dates_secondary
   street:
     plugin: get
     source: src_street

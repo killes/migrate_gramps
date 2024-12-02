@@ -28,10 +28,10 @@ source:
       selector: '../../@handle'
     - name: src_position1
       label: 'Position 1'
-      selector: 'count(../preceding-sibling::*[name() = "name"])'
+      selector: 'count(../preceding-sibling::*[self::name])'
     - name: src_position2
       label: 'Position 2'
-      selector: 'count(preceding-sibling::*[name() = "surname"])'
+      selector: 'count(preceding-sibling::*[self::surname])'
     - name: src_value
       label: 'Surname'
       selector: 'self::*'
