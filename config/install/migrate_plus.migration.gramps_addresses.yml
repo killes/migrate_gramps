@@ -72,7 +72,7 @@ source:
 process:
   priv:
     plugin: get
-    source: src_privt
+    source: src_priv
   date:
     plugin: migration_lookup
     source:
