@@ -50,17 +50,17 @@ final class GrampsSourceAttribute extends ContentEntityBase implements GrampsSou
     // The Gramps "priv" field is reverse to the Drupal "status" field.
     $fields['priv'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Priv'))
-      ->setDescription(t('The Priv field of the Attribute entity.'))
+      ->setDescription(t('The Priv field of the Source Attribute entity.'))
       ->setReadOnly(TRUE);
 
     $fields['type'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Type'))
-      ->setDescription(t('The type field of the Attribute entity.'))
+      ->setDescription(t('The type field of the Source Attribute entity.'))
       ->setReadOnly(TRUE);
 
     $fields['value'] = BaseFieldDefinition::create('string')
       ->setLabel(t('Value'))
-      ->setDescription(t('The value field of the Attribute entity.'))
+      ->setDescription(t('The value field of the Source Attribute entity.'))
       ->setReadOnly(TRUE);
 
     return $fields;

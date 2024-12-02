@@ -1,0 +1,65 @@
+id: gramps_urls
+label: 'Migration for Gramps urls'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  item_selector: '//(ns:person|ns:place|ns:repository)/url'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+      # used to get the parent bundle
+    - name: xml_parent
+      label: 'XML element'
+      selector: 'fn:name(parent::*)'
+    - name: src_position
+      label: 'Position'
+      selector: 'count(preceding-sibling::*[self::url])'
+    - name: src_priv
+      label: 'Priv'
+      selector: '@priv'
+    - name: src_type
+      label: 'Type'
+      selector: '@type'
+    - name: src_href
+      label: 'Href'
+      selector: '@href'
+    - name: src_description
+      label: 'Description'
+      selector: '@description'
+
+  ids:
+    src_handle:
+      type: string
+    xml_parent:
+      type: string
+    src_position:
+      type: integer
+process:
+  priv:
+    plugin: get
+    source: src_priv
+  type:
+    plugin: get
+    source: src_type
+  href:
+    plugin: get
+    source: src_href
+  description:
+    plugin: get
+    source: src_description
+
+destination:
+  plugin: 'entity:gramps_url'
