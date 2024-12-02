@@ -7,3 +7,7 @@ administer gramps_address:
   title: 'Administer gramps addresses'
   restrict access: true
 
+
+administer gramps_attribute:
+  title: 'Administer gramps attributes'
+  restrict access: true

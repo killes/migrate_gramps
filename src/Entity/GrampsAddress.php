@@ -122,7 +122,7 @@ final class GrampsAddress extends ContentEntityBase implements GrampsAddressInte
       ->setCardinality(BaseFieldDefinition::CARDINALITY_UNLIMITED);
 
     $fields['notes'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Citations'))
+      ->setLabel(t('Notes'))
       ->setDescription(t('The Notes reference field of the Name entity.'))
       ->setSettings([
         'target_type' => 'node',
