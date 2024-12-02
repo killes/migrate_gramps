@@ -2,3 +2,8 @@ administer gramps_date types:
   title: 'Administer gramps date types'
   description: 'Maintain the types of gramps date entity.'
   restrict access: true
+
+administer gramps_address:
+  title: 'Administer gramps addresses'
+  restrict access: true
+
