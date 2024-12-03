@@ -9,11 +9,12 @@ dependencies:
 migration_group: gramps
 migration_dependencies:
   required:
+    - gramps_attributes
     - gramps_citations
     - gramps_events
     - gramps_notes
     - gramps_tags
-    - gramps_names
+    - gramps_urls
 source:
   track_changes: true
 #  data_parser_plugin: xpath20
@@ -24,6 +25,7 @@ source:
   constants:
     TITLE_PREFIX: 'Gramps person '
     ID: 'id'
+    PERSON: 'person'
 
   item_selector: //ns:person
   fields:
@@ -39,15 +41,15 @@ source:
     - name: src_gender
       label: 'Gender'
       selector: 'ns:gender'
+    - name: src_eventref
+      label: 'Event reference'
+      selector: ns:eventref/@hlink
     - name: src_parentin
       label: 'Family parent reference'
       selector: ns:parentin/@hlink
     - name: src_citationref
       label: 'Citation reference'
       selector: ns:citationref/@hlink
-    - name: src_eventref
-      label: 'Event reference'
-      selector: ns:eventref/@hlink
     - name: src_childof
       label: 'Child reference'
       selector: ns:childof/@hlink
@@ -95,6 +97,26 @@ process:
     source:
       - '@names'
       - constants/ID
+  addresses:
+    plugin: migration_lookup
+    source:
+      - src_handle
+      - constants/PERSON
+    migration: gramps_addresses
+    allow_multiple: true
+  # We need to extract the values we want from the "id" column.
+  field_addresses:
+    -
+      plugin: skip_on_empty
+      source: '@addresses'
+      method: process
+    -
+      plugin: callback
+      callable: array_column
+      unpack_source: true
+      source:
+        - '@addresses'
+        - constants/ID
   field_event_reference:
     plugin: migration_lookup
     source: src_eventref
