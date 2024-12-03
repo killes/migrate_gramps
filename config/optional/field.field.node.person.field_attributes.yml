@@ -1,0 +1,26 @@
+uuid: dca5f041-35de-4594-850a-aa8a9a434b52
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_attributes
+    - node.type.person
+id: node.person.field_attributes
+field_name: field_attributes
+entity_type: node
+bundle: person
+label: Attributes
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:gramps_attribute'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+field_type: entity_reference

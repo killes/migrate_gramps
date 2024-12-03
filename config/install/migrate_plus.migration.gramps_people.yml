@@ -97,6 +97,10 @@ process:
     source:
       - '@names'
       - constants/ID
+  field_event_reference:
+    plugin: migration_lookup
+    source: src_eventref
+    migration: gramps_events
   addresses:
     plugin: migration_lookup
     source:
@@ -117,10 +121,26 @@ process:
       source:
         - '@addresses'
         - constants/ID
-  field_event_reference:
+  attributes:
     plugin: migration_lookup
-    source: src_eventref
-    migration: gramps_events
+    source:
+      - src_handle
+      - constants/PERSON
+    migration: gramps_attributes
+    allow_multiple: true
+  # We need to extract the values we want from the "id" column.
+  field_attributes:
+    -
+      plugin: skip_on_empty
+      source: '@attributes'
+      method: process
+    -
+      plugin: callback
+      callable: array_column
+      unpack_source: true
+      source:
+        - '@attributes'
+        - constants/ID
   field_note_reference:
     plugin: migration_lookup
     source: src_noteref
