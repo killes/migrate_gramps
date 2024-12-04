@@ -1,0 +1,78 @@
+id: gramps_attributes_secondary
+label: 'Migration for Gramps attributes at the second level'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  item_selector: '//(ns:eventref|ns:objref)/attribute'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../../@handle'
+      # used to get the parent bundle
+    - name: xml_parent
+      label: 'XML element'
+      selector: 'fn:name(parent::*)'
+    - name: src_position1
+      label: 'Position 1'
+      selector: 'count(../preceding-sibling::*[fn:name(parent::*)])'
+    - name: src_position2
+      label: 'Position 2'
+      selector: 'count(preceding-sibling::*[self::attribute])'
+    - name: src_priv
+      label: 'Priv'
+      selector: '@priv'
+    - name: src_type
+      label: 'Type'
+      selector: '@type'
+    - name: src_value
+      label: 'Value'
+      selector: '@value'
+
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+  ids:
+    src_handle:
+      type: string
+    xml_parent:
+      type: string
+    src_position1:
+      type: integer
+    src_position2:
+      type: integer
+process:
+  priv:
+    plugin: get
+    source: src_priv
+  type:
+    plugin: get
+    source: src_type
+  value:
+    plugin: get
+    source: src_value
+
+  citations:
+    plugin: migration_lookup
+    source: src_citationref
+    migration: gramps_citations
+  notes:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+destination:
+  plugin: 'entity:gramps_attribute'

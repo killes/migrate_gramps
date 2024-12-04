@@ -1,0 +1,95 @@
+id: gramps_eventrefs
+label: 'Migration for Gramps event references'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  constants:
+    ID: 'id'
+    EVENTREF: 'eventref'
+  item_selector: '//(ns:person|ns:family)/eventref'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+      # used to get the parent bundle
+    - name: xml_parent
+      label: 'XML element'
+      selector: 'fn:name(parent::*)'
+    - name: src_position
+      label: 'Position'
+      selector: 'count(preceding-sibling::*[self::eventref])'
+    - name: src_event_handle
+      label: 'Event handle'
+      selector: '@hlink'
+    - name: src_priv
+      label: 'Priv'
+      selector: '@priv'
+    - name: src_role
+      label: 'Role'
+      selector: '@role'
+
+      # Attributes get migrated separately and will be attached during process
+
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+  ids:
+    src_handle:
+      type: string
+    xml_parent:
+      type: string
+    src_position:
+      type: integer
+process:
+  eventref:
+    plugin: migration_lookup
+    source: src_event_handle
+    migration: gramps_events
+  priv:
+    plugin: get
+    source: src_priv
+  role:
+    plugin: get
+    source: src_role
+
+  att:
+    plugin: migration_lookup
+    source: src_handle
+    migration:
+      - gramps_attributes_secondary
+    source_ids:
+      gramps_attributes_secondary:
+        - src_handle
+        - constants/EVENTREF
+        - src_position
+    allow_multiple: true
+  attributes:
+    -
+      plugin: skip_on_empty
+      source: '@att'
+      method: process
+    -
+      plugin: callback
+      callable: array_column
+      unpack_source: true
+      source:
+        - '@att'
+        - constants/ID
+  notes:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+destination:
+  plugin: 'entity:gramps_event_reference'

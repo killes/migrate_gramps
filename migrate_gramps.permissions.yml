@@ -19,3 +19,7 @@ administer gramps_source_attribute:
 administer gramps_url:
   title: 'Administer gramps urls'
   restrict access: true
+
+administer gramps_event_reference:
+  title: 'Administer gramps event references'
+  restrict access: true
