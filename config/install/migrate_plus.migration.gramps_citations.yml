@@ -34,7 +34,7 @@ source:
     - name: src_objref
       label: 'Object Reference'
       selector: 'ns:objref/@hlink'
-    - name: src_reporef
+    - name: src_sourceref
       label: 'Source Reference'
       selector: 'ns:sourceref/@hlink'
     - name: src_tags
