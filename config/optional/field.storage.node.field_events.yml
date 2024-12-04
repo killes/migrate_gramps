@@ -1,0 +1,20 @@
+uuid: c230aeac-db63-4ffd-a872-356163878f88
+langcode: en
+status: true
+dependencies:
+  module:
+    - migrate_gramps
+    - node
+id: node.field_events
+field_name: field_events
+entity_type: node
+type: entity_reference
+settings:
+  target_type: gramps_event_reference
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

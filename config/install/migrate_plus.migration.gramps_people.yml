@@ -41,9 +41,7 @@ source:
     - name: src_gender
       label: 'Gender'
       selector: 'ns:gender'
-    - name: src_eventref
-      label: 'Event reference'
-      selector: ns:eventref/@hlink
+      # Event references are migrated separately
     - name: src_parentin
       label: 'Family parent reference'
       selector: ns:parentin/@hlink
@@ -97,10 +95,10 @@ process:
     source:
       - '@names'
       - constants/ID
-  field_event_reference:
+  field_events:
     plugin: migration_lookup
-    source: src_eventref
-    migration: gramps_events
+    source: src_handle
+    migration: gramps_eventrefs
   addresses:
     plugin: migration_lookup
     source:
