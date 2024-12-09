@@ -23,3 +23,11 @@ administer gramps_url:
 administer gramps_event_reference:
   title: 'Administer gramps event references'
   restrict access: true
+
+administer gramps_place_reference:
+  title: 'Administer gramps place references'
+  restrict access: true
+
+administer gramps_location:
+  title: 'Administer gramps locations'
+  restrict access: true

@@ -113,6 +113,11 @@ class Xpath20 extends DataParserPluginBase {
     $vars = array();
     // Evaluate the expression
     $result = $expression->EvaluateWithVars($provider, $vars);
+    var_dump($result->getCount());
+#    if (!($result instanceof Iterator) || !is_array($result)) {
+#      var_dump('NO MATCH');
+#      return FALSE;
+#    }
     $this->iterator = $result;
     return TRUE;
   }

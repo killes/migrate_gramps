@@ -1,0 +1,90 @@
+id: gramps_locations
+label: 'Migration for Gramps locations'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  item_selector: '//ns:placeobj/location'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+      # used to get the parent bundle
+    - name: src_position
+      label: 'Position'
+      selector: 'count(preceding-sibling::*[self::location])'
+    - name: src_street
+      label: 'Street'
+      selector: 'ns:street'
+    - name: src_locality
+      label: 'Locality'
+      selector: 'ns:locality'
+    - name: src_city
+      label: 'City'
+      selector: 'ns:city'
+    - name: src_parish
+      label: 'Parish'
+      selector: 'ns:parish'
+    - name: src_county
+      label: 'County'
+      selector: 'ns:county'
+    - name: src_state
+      label: 'State'
+      selector: 'ns:state'
+    - name: src_country
+      label: 'Country'
+      selector: 'ns:country'
+    - name: src_postal
+      label: 'Postal'
+      selector: 'ns:postal'
+    - name: src_phone
+      label: 'Phone'
+      selector: 'ns:phone'
+
+  ids:
+    src_handle:
+      type: string
+    src_position:
+      type: integer
+process:
+  street:
+    plugin: get
+    source: src_street
+  locality:
+    plugin: get
+    source: src_locality
+  city:
+    plugin: get
+    source: src_city
+  parish:
+    plugin: get
+    source: src_parish
+  county:
+    plugin: get
+    source: src_county
+  state:
+    plugin: get
+    source: src_state
+  country:
+    plugin: get
+    source: src_country
+  postal:
+    plugin: get
+    source: src_postal
+  phone:
+    plugin: get
+    source: src_phone
+
+destination:
+  plugin: 'entity:gramps_location'

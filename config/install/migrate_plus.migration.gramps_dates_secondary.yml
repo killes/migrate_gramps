@@ -13,16 +13,16 @@ source:
   urls:
     # TODO: figure out how to use a file provided from CLI
     # - sites/default/files/example.gramps.orig
-    - sites/default/files/example.gramps.short
+    - sites/default/files/example.gramps.orig
 
-  item_selector: '//(ns:address|ns:name)/(dateval|datestr|daterange|datespan)'
+  item_selector: '//(ns:address|ns:name|ns:placeref)/(dateval|datestr|daterange|datespan)'
   fields:
     - name: src_handle
       label: 'Gramps handle'
       selector: '../../@handle'
     - name: src_position1
       label: 'Position 1'
-      selector: 'count(../preceding-sibling::*[self::address | self::name])'
+      selector: 'count(../preceding-sibling::*[self::address | self::name | self::placeref])'
       # used to get the bundle
     - name: xml_element
       label: 'XML element'

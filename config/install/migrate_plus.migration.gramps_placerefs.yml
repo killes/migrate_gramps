@@ -1,0 +1,51 @@
+id: gramps_placerefs
+label: 'Migration for Gramps place references'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  constants:
+    ID: 'id'
+    PLACEREF: 'placeref'
+  item_selector: '//ns:placeobj/placeref'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+    - name: src_position
+      label: 'Position'
+      selector: 'count(preceding-sibling::*[self::placeref])'
+    - name: src_place_handle
+      label: 'Place handle'
+      selector: '@hlink'
+
+      # Dates get migrated separately and will be attached during process
+  ids:
+    src_handle:
+      type: string
+    src_position:
+      type: integer
+process:
+  placeref:
+    plugin: migration_lookup
+    source: src_place_handle
+    migration: gramps_places
+  date:
+    plugin: migration_lookup
+    source:
+      - src_handle
+      - constants/PLACEREF
+    migration: gramps_dates_secondary
+destination:
+  plugin: 'entity:gramps_place_reference'

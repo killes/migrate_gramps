@@ -45,15 +45,15 @@ source:
     - name: src_parentin
       label: 'Family parent reference'
       selector: ns:parentin/@hlink
-    - name: src_citationref
-      label: 'Citation reference'
-      selector: ns:citationref/@hlink
     - name: src_childof
       label: 'Child reference'
       selector: ns:childof/@hlink
     - name: src_noteref
       label: 'Note Reference'
       selector: 'ns:noteref/@hlink'
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
     - name: src_tags
       label: 'Tag Reference'
       selector: 'ns:tagref/@hlink'
