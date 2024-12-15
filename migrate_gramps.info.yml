@@ -3,6 +3,7 @@ type: module
 description: Migrates XML data from the genealocigal programm gramps into Drupal.
 package: Migration
 core_version_requirement: ^10 || ^11
+php: 8.4
 dependencies:
   - drupal:migrate
   - migrate_plus:migrate_plus
