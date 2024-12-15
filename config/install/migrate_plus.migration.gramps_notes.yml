@@ -62,7 +62,7 @@ process:
   changed:
     plugin: get
     source: src_changed
-  styles:
+  body:
     plugin: textstyles
     source:
       - src_text
