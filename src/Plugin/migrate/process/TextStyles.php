@@ -27,9 +27,14 @@ class TextStyles extends ProcessPluginBase {
     $text = $value[0];
     $format = $value[1];
     $format_instructions = $value[2];
-    // If the text is marked as to be formatted, we process it according the
-    // formatting instructions and return valid HTML.
-    if ($format && count($format_instructions)) {
+
+    // We process the text according the formatting instructions and return
+    // HTML.
+    if (!is_null($format_instructions) && count($format_instructions)) {
+      // If we only have one instruction wrap it in an array, too.
+      if (count($format_instructions) == 1) {
+        $format_instructions = [$format_instructions];
+      }
       /*
         Formatting instructions consist of a name, an optional value and one or
         more start and end values indicating the ranges of characters they apply
@@ -114,10 +119,17 @@ class TextStyles extends ProcessPluginBase {
 
       $processed_text = implode('', $text_array);
 
-      return $processed_text;
+      // @TODO: Add some validation.
+
+      $text = $processed_text;
     }
 
-    // In all other cases we return just the text.
+    // "format" means to preserve whitespace.
+    if ($format) {
+      $text = '<div style="white-space: pre;">' . $text . '</div>';
+    }
+
+    // We return the text.
     return $text;
   }
 
