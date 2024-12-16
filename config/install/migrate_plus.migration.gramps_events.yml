@@ -18,6 +18,7 @@ migration_group: gramps
 source:
   constants:
     TITLE_PREFIX: 'Gramps event '
+    ALIAS: '/Event/handle/'
 
   item_selector: //ns:event
   fields:
@@ -93,6 +94,15 @@ process:
     plugin: migration_lookup
     source: src_tags
     migration: gramps_tags
+  alias:
+    plugin: substr
+    source: src_handle
+    start: 1
+  path/alias:
+    plugin: concat
+    source:
+      - constants/ALIAS
+      - '@alias'
 destination:
   plugin: 'entity:node'
   default_bundle: event

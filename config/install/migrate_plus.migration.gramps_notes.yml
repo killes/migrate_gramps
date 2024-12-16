@@ -13,6 +13,7 @@ migration_dependencies:
 source:
   constants:
     TITLE_PREFIX: 'Gramps note '
+    ALIAS: '/Note/handle/'
   urls:
     # TODO: figure out how to use a file provided from CLI
     # - sites/default/files/example.gramps.orig
@@ -72,6 +73,15 @@ process:
     plugin: migration_lookup
     source: src_tags
     migration: gramps_tags
+  alias:
+    plugin: substr
+    source: src_handle
+    start: 1
+  path/alias:
+    plugin: concat
+    source:
+      - constants/ALIAS
+      - '@alias'
 destination:
   plugin: 'entity:node'
   default_bundle: note

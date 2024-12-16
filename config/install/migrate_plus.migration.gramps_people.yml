@@ -26,6 +26,7 @@ source:
     TITLE_PREFIX: 'Gramps person '
     ID: 'id'
     PERSON: 'person'
+    ALIAS: '/Person/handle/'
 
   item_selector: //ns:person
   fields:
@@ -147,6 +148,15 @@ process:
     plugin: migration_lookup
     source: src_tags
     migration: gramps_tags
+  alias:
+    plugin: substr
+    source: src_handle
+    start: 1
+  path/alias:
+    plugin: concat
+    source:
+      - constants/ALIAS
+      - '@alias'
 destination:
   plugin: 'entity:node'
   default_bundle: person

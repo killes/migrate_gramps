@@ -14,6 +14,9 @@ migration_dependencies:
     - gramps_objects
     - gramps_tags
 source:
+  constants:
+    ALIAS: '/Place/handle/'
+
   item_selector: //ns:placeobj
   fields:
     - name: src_handle
@@ -87,6 +90,15 @@ process:
     plugin: migration_lookup
     source: src_tags
     migration: gramps_tags
+  alias:
+    plugin: substr
+    source: src_handle
+    start: 1
+  path/alias:
+    plugin: concat
+    source:
+      - constants/ALIAS
+      - '@alias'
 destination:
   plugin: 'entity:node'
   default_bundle: placeobj
