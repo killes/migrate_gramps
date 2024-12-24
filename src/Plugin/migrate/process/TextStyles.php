@@ -135,6 +135,9 @@ class TextStyles extends ProcessPluginBase {
 
   /**
    * Helper function, return start of HTML tags.
+   *
+   * Note: For these, except the links, to show up on a Drupal site, you will
+   * need something like https://www.drupal.org/project/extended_html_filter
    */
   function _get_start_element($element) {
     switch ($element['name']) {

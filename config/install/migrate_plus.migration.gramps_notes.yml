@@ -63,12 +63,15 @@ process:
   changed:
     plugin: get
     source: src_changed
-  body:
+  body/value:
     plugin: textstyles
     source:
       - src_text
       - src_format
       - src_styles
+  body/format:
+    plugin: default_value
+    default_value: restricted_html
   field_tags:
     plugin: migration_lookup
     source: src_tags
