@@ -1,0 +1,70 @@
+id: gramps_personrefs
+label: 'Migration for Gramps Person Refs'
+dependencies:
+  module:
+    - migrate_gramps
+  enforced:
+    module:
+      - migrate_gramps
+migration_group: gramps
+source:
+  track_changes: true
+  data_parser_plugin: xpath20
+  urls:
+    # TODO: figure out how to use a file provided from CLI
+    - sites/default/files/example.gramps.orig
+    # - sites/default/files/example.gramps.short
+
+  item_selector: '//ns:person/personref'
+  fields:
+    - name: src_handle
+      label: 'Gramps handle'
+      selector: '../@handle'
+    - name: src_position
+      label: 'Position'
+      selector: 'count(preceding-sibling::*[self::personref])'
+    - name: src_ref
+      label: 'Person reference'
+      selector: '@hlink'
+    - name: src_priv
+      label: 'Priv'
+      selector: '@priv'
+    - name: src_rel
+      label: 'Rel'
+      selector: '@rel'
+
+    - name: src_citationref
+      label: 'Citation reference'
+      selector: ns:citationref/@hlink
+    - name: src_noteref
+      label: 'Note Reference'
+      selector: 'ns:noteref/@hlink'
+  ids:
+    src_handle:
+      type: string
+    src_position:
+      type: integer
+process:
+  person:
+    plugin: get
+    source: src_handle
+  reference:
+    plugin: get
+    source: src_ref
+  priv:
+    plugin: get
+    source: src_priv
+  rel:
+    plugin: get
+    source: src_rel
+
+  citations:
+    plugin: migration_lookup
+    source: src_citationref
+    migration: gramps_citations
+  notes:
+    plugin: migration_lookup
+    source: src_noteref
+    migration: gramps_notes
+destination:
+  plugin: 'entity:gramps_person_reference'
