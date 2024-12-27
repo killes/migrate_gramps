@@ -138,6 +138,9 @@ class TextStyles extends ProcessPluginBase {
    *
    * Note: For these, except the links, to show up on a Drupal site, you will
    * need something like https://www.drupal.org/project/extended_html_filter
+   *
+   * @TODO: We could convert some of those into html5 elements, but the exact
+   * sizes and colors would be lost. We could also add external CSS.
    */
   function _get_start_element($element) {
     switch ($element['name']) {
