@@ -31,3 +31,7 @@ administer gramps_place_reference:
 administer gramps_location:
   title: 'Administer gramps locations'
   restrict access: true
+
+administer gramps_person_reference:
+  title: 'Administer gramps person references'
+  restrict access: true

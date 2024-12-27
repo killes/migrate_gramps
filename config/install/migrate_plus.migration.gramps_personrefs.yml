@@ -46,11 +46,13 @@ source:
       type: integer
 process:
   person:
-    plugin: get
+    plugin: migration_lookup
     source: src_handle
+    migration: gramps_people
   reference:
-    plugin: get
+    plugin: migration_lookup
     source: src_ref
+    migration: gramps_people
   priv:
     plugin: get
     source: src_priv
