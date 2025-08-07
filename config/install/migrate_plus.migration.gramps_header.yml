@@ -1,0 +1,67 @@
+id: gramps_header
+label: 'Gramps XML Header Information'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Header
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: /database/header
+  fields:
+    - name: created_date
+      label: 'Created Date'
+      selector: created/@date
+    - name: created_version
+      label: 'Created Version' 
+      selector: created/@version
+    - name: researcher_name
+      label: 'Researcher Name'
+      selector: researcher/resname
+    - name: researcher_addr
+      label: 'Researcher Address'
+      selector: researcher/resaddr
+    - name: researcher_city
+      label: 'Researcher City'
+      selector: researcher/rescity
+    - name: researcher_state
+      label: 'Researcher State'
+      selector: researcher/resstate
+    - name: researcher_country
+      label: 'Researcher Country'
+      selector: researcher/rescountry
+    - name: researcher_postal
+      label: 'Researcher Postal'
+      selector: researcher/respostal
+    - name: researcher_phone
+      label: 'Researcher Phone'
+      selector: researcher/resphone
+    - name: researcher_email
+      label: 'Researcher Email'
+      selector: researcher/resemail
+  ids:
+    id:
+      type: string
+process:
+  id: 
+    plugin: default_value
+    default_value: 'gramps_header'
+  title: 'Gramps Database Header'
+  field_created_date: created_date
+  field_created_version: created_version
+  field_researcher_name: researcher_name
+  field_researcher_address: researcher_addr
+  field_researcher_city: researcher_city
+  field_researcher_state: researcher_state
+  field_researcher_country: researcher_country
+  field_researcher_postal: researcher_postal
+  field_researcher_phone: researcher_phone
+  field_researcher_email: researcher_email
+destination:
+  plugin: 'entity:node'
+  default_bundle: gramps_header
+
+
+

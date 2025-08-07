@@ -1,0 +1,63 @@
+id: gramps_event_details
+label: 'Gramps Event Details'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Event Details
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: /database/events/event
+  fields:
+    - name: handle
+      label: 'Handle'
+      selector: '@handle'
+    - name: event_type
+      label: 'Event Type'
+      selector: 'type'
+    - name: description
+      label: 'Description'
+      selector: 'description'
+    - name: custom_type
+      label: 'Custom Type'
+      selector: 'type/@custom'
+  ids:
+    handle:
+      type: string
+process:
+  handle: handle
+  # Update existing event with additional details
+  field_event_type_custom: custom_type
+  field_event_description: description
+  field_event_type_standard:
+    plugin: static_map
+    source: event_type
+    map:
+      Birth: birth
+      Death: death
+      Marriage: marriage
+      Divorce: divorce
+      Baptism: baptism
+      Burial: burial
+      Engagement: engagement
+      Education: education
+      Graduation: graduation
+      Medical Information: medical
+      Military Service: military
+      Naturalization: naturalization
+      Occupation: occupation
+      Religion: religion
+      Residence: residence
+      Retirement: retirement
+    default_value: other
+destination:
+  plugin: 'entity:node'
+  default_bundle: gramps_event
+migration_dependencies:
+  required:
+    - gramps_events
+
+
+

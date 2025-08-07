@@ -1,0 +1,38 @@
+id: gramps_name_maps
+label: 'Gramps Name Maps'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Name Maps
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: /database/namemaps/map
+  fields:
+    - name: type
+      label: 'Map Type'
+      selector: '@type'
+    - name: key
+      label: 'Key'
+      selector: '@key'
+    - name: value
+      label: 'Value'
+      selector: '@value'
+  ids:
+    id:
+      type: string
+process:
+  id:
+    plugin: concat
+    source:
+      - type
+      - key
+    delimiter: '_'
+  map_type: type
+  key_name: key
+  mapped_value: value
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: name_maps

@@ -1,0 +1,43 @@
+id: gramps_bookmarks
+label: 'Gramps Bookmarks'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Bookmarks
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: /database/bookmarks/*
+  fields:
+    - name: bookmark_type
+      label: 'Bookmark Type'
+      selector: 'name()'
+    - name: target_handle
+      label: 'Target Handle'
+      selector: '@hlink'
+  ids:
+    target_handle:
+      type: string
+process:
+  bookmark_type: bookmark_type
+  target_handle: target_handle
+  target_entity_id:
+    plugin: migration_lookup
+    migration:
+      - gramps_people
+      - gramps_families 
+      - gramps_events
+      - gramps_places
+      - gramps_sources
+      - gramps_objects
+    source: target_handle
+  field_bookmark_type: bookmark_type
+  field_target_entity: target_entity_id
+destination:
+  plugin: 'entity:node'
+  default_bundle: gramps_bookmark
+
+
+

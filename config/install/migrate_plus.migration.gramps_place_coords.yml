@@ -1,0 +1,50 @@
+id: gramps_place_coords
+label: 'Gramps Place Coordinates'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Place Coordinates
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: /database/places/placeobj[coord]
+  fields:
+    - name: handle
+      label: 'Handle'
+      selector: '@handle'
+    - name: latitude
+      label: 'Latitude'
+      selector: 'coord/@lat'
+    - name: longitude
+      label: 'Longitude'
+      selector: 'coord/@long'
+  ids:
+    handle:
+      type: string
+process:
+  handle: handle
+  field_latitude: 
+    plugin: callback
+    callable: floatval
+    source: latitude
+  field_longitude:
+    plugin: callback
+    callable: floatval  
+    source: longitude
+  field_coordinates:
+    plugin: concat
+    source:
+      - '@latitude'
+      - '@longitude'
+    delimiter: ','
+destination:
+  plugin: 'entity:node'
+  default_bundle: gramps_place
+migration_dependencies:
+  required:
+    - gramps_places
+
+
+

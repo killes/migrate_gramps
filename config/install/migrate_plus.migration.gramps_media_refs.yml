@@ -1,0 +1,67 @@
+id: gramps_media_refs
+label: 'Gramps Media References'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Media References
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: '//*[objref]'  # Any element with objref child
+  fields:
+    - name: parent_handle
+      label: 'Parent Handle'
+      selector: '@handle'
+    - name: parent_type
+      label: 'Parent Type'
+      selector: 'name()'
+    - name: media_handle
+      label: 'Media Handle'
+      selector: 'objref/@hlink'
+    - name: media_region
+      label: 'Media Region'
+      selector: 'objref/region'
+    - name: media_attributes
+      label: 'Media Attributes'
+      selector: 'objref/attribute'
+  ids:
+    id:
+      type: string
+process:
+  id:
+    plugin: concat
+    source:
+      - parent_handle
+      - media_handle
+    delimiter: '_'
+  parent_entity_type:
+    plugin: static_map
+    source: parent_type
+    map:
+      person: node
+      family: node
+      event: node
+      source: node
+    default_value: node
+  parent_entity_id:
+    plugin: migration_lookup
+    migration: 
+      - gramps_people
+      - gramps_families
+      - gramps_events
+      - gramps_sources
+    source: parent_handle
+  media_entity_id:
+    plugin: migration_lookup
+    migration: gramps_objects
+    source: media_handle
+  field_media_region: media_region
+  field_media_attributes: media_attributes
+destination:
+  plugin: 'entity:paragraph'
+  default_bundle: media_reference
+
+
+

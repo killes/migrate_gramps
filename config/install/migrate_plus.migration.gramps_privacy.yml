@@ -1,0 +1,53 @@
+id: gramps_privacy
+label: 'Gramps Privacy Flags'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Privacy
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: '//*[@priv="1"]'  # Any element with priv="1"
+  fields:
+    - name: handle
+      label: 'Handle'
+      selector: '@handle'
+    - name: element_type
+      label: 'Element Type'
+      selector: 'name()'
+    - name: private_flag
+      label: 'Private Flag'
+      selector: '@priv'
+  ids:
+    handle:
+      type: string
+process:
+  handle: handle
+  entity_type:
+    plugin: static_map
+    source: element_type
+    map:
+      person: gramps_person
+      family: gramps_family
+      event: gramps_event
+      place: gramps_place
+      source: gramps_source
+      citation: gramps_citation
+      object: gramps_object
+      note: gramps_note
+      repository: gramps_repository
+    default_value: unknown
+  field_private:
+    plugin: static_map
+    source: private_flag
+    map:
+      '1': 1
+      '0': 0
+    default_value: 0
+destination:
+  plugin: 'entity_update:node'
+
+
+

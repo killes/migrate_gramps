@@ -1,0 +1,45 @@
+id: gramps_name_formats  
+label: 'Gramps Name Formats'
+migration_group: gramps
+migration_tags:
+  - Gramps
+  - Name Formats
+source:
+  plugin: gramps_xml
+  data_fetcher_plugin: http
+  data_parser_plugin: xml
+  urls: 'public://gramps_data.xml'
+  item_selector: /database/name-formats/format
+  fields:
+    - name: number
+      label: 'Format Number'
+      selector: '@number'
+    - name: name
+      label: 'Format Name'
+      selector: '@name'
+    - name: format_string
+      label: 'Format String'
+      selector: '@fmt_str'
+    - name: active
+      label: 'Active'
+      selector: '@active'
+  ids:
+    number:
+      type: integer
+process:
+  format_number: number
+  format_name: name
+  format_string: format_string
+  active_format:
+    plugin: static_map
+    source: active
+    map:
+      '1': 1
+      '0': 0
+    default_value: 0
+destination:
+  plugin: 'entity:taxonomy_term'
+  default_bundle: name_formats
+
+
+
